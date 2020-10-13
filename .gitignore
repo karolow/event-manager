@@ -1,0 +1,9 @@
+# local environment
+.env
+
+*.log
+*.pot
+*.pyc
+__pycache__
+
+
