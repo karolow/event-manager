@@ -3,4 +3,5 @@ from django.db import models
 
 
 class CustomUser(AbstractUser):
-    pass
+    phone = models.CharField(max_length=50, blank=True)
+    position = models.CharField(max_length=255, blank=True)
