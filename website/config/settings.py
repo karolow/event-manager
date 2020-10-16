@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'projects.apps.ProjectsConfig',
     'allauth',
     'allauth.account',
+    'django_tables2',
 ]
 
 MIDDLEWARE = [
