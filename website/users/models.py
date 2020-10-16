@@ -1,12 +1,12 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-from organizations.models import Organizations
+from organizations.models import Organization
 
 
 class CustomUser(AbstractUser):
     organization = models.ForeignKey(
-        Organizations,
+        Organization,
         on_delete=models.SET_NULL,
         null=True
     )
