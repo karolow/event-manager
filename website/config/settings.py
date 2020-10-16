@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'pages.apps.PagesConfig',
     'core.apps.CoreConfig',
     'organizations.apps.OrganizationsConfig',
+    'projects.apps.ProjectsConfig',
     'allauth',
     'allauth.account',
 ]
