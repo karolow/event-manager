@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'django_tables2',
     'django_filters',
+    'multiselectfield',
 ]
 
 MIDDLEWARE = [
