@@ -78,3 +78,7 @@ class Status(models.Model):
 
     class Meta:
         abstract = True
+
+
+class Type(PersistentItem):
+    title = models.CharField(max_length=50)
