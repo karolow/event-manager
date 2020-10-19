@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'django_tables2',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
