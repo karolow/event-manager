@@ -10,5 +10,6 @@ class CustomUser(AbstractUser):
         on_delete=models.SET_NULL,
         null=True
     )
+    email = models.EmailField(blank=True)
     phone = models.CharField(max_length=50, blank=True)
     position = models.CharField(max_length=255, blank=True)
