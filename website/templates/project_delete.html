@@ -1,0 +1,14 @@
+{% extends '_base.html' %}
+{% load materializecss %}
+
+{% block title %}Delete project{% endblock title %}
+
+{% block content %}
+<h2>Delete project</h2>
+  <form action="" method="post">
+  {% csrf_token %}
+  <p>Are you sure you want to delete "{{ project.title }}"?</p>
+  <input type="submit" value="Confirm">
+  <a class="btn waves-effect waves-light" href="{% url 'project_table' %}">Cancel</a>
+</form>
+{% endblock content %}

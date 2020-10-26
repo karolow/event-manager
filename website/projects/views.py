@@ -27,16 +27,17 @@ from .tables import EventTable
 from .filters import EventFilter
 
 
-class ProjectListView(ListView):
+# to do – change ListView to TableView
+class ProjectTableView(ListView):
     model = Project
     context_object_name = 'project_list'
-    template_name = 'project_list.html'
+    template_name = 'project_table.html'
 
 
 class ProjectCreateView(LoginRequiredMixin,
                         CreateView):
     form_class = ProjectForm
-    success_url = reverse_lazy('project_list')
+    success_url = reverse_lazy('project_table')
     template_name = 'project.html'
 
     def form_valid(self, form):
@@ -44,6 +45,48 @@ class ProjectCreateView(LoginRequiredMixin,
         project.supervisor = self.request.user
         project.save()
         return super().form_valid(form)
+
+
+class ProjectDetailView(LoginRequiredMixin,
+                        DetailView):
+    model = Project
+    context_object_name = 'project'
+    template_name = 'project_detail.html'
+
+
+class ProjectUpdateView(LoginRequiredMixin,
+                        UserPassesTestMixin,
+                        UpdateView):
+    model = Project
+    form_class = ProjectForm
+    success_url = reverse_lazy('project_table')
+    template_name = 'project.html'
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.supervisor == self.request.user
+
+
+def duplicate_project(request, **kwargs):
+    """
+    Create a duplicate of project
+    """
+    project = Project.objects.get(pk=kwargs.get('pk'))
+    new_project = project.make_clone(attrs={'title': f'COPY OF {project.title}', 'status': 'd'})
+    return redirect('project_update', pk=new_project.pk)
+
+
+class ProjectDeleteView(LoginRequiredMixin,
+                        UserPassesTestMixin,
+                        DeleteView):
+
+    model = Project
+    success_url = reverse_lazy('project_table')
+    template_name = 'project_delete.html'
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.supervisor == self.request.user
 
 
 class EventTableView(LoginRequiredMixin,

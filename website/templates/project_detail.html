@@ -1,0 +1,12 @@
+{% extends '_base.html' %}
+{% load materializecss %}
+
+{% block title %}{{ project.title }}{% endblock title %}
+
+{% block content %}
+<div>
+  <h2>{{ project.title }}</h2>
+  <p>{{ project.audiences }}</p>
+  <p>{{ project.get_status_display }}</p>
+</div>
+{% endblock content %}
