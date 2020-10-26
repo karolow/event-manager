@@ -1,5 +1,6 @@
 import uuid
 from django.db import models
+from multiselectfield import MultiSelectField
 
 
 class PersistentItem(models.Model):
@@ -82,3 +83,50 @@ class Status(models.Model):
 
 class Type(PersistentItem):
     title = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.title
+
+
+class Category(models.Model):
+    FIELDS = (
+        ('architecture', 'architecture'),
+        ('heritage', 'heritage'),
+        ('cultural education', 'cultural education'),
+        ('cinema', 'cinema'),
+        ('photography', 'photography'),
+        ('video games', 'video games'),
+        ('interdisciplinary', 'interdisciplinary'),
+        ('cabaret', 'cabaret'),
+        ('cuisine', 'cuisine'),
+        ('literature', 'literature'),
+        ('fashion', 'fashion'),
+        ('music', 'music'),
+        ('new media', 'new media'),
+        ('traveling', 'traveling'),
+        ('design', 'desing'),
+        ('urban intervension', 'urban intervension'),
+        ('craft', 'craft'),
+        ('street art', 'street art'),
+        ('visual arts', 'visual arts'),
+        ('dance', 'dance'),
+        ('theatre', 'theatre'),
+        ('other', 'other'),
+    )
+
+    fields = MultiSelectField(choices=FIELDS, null=True, blank=True)
+
+    AUDIENCES = (
+        ('young kids', 'young kids'),
+        ('primary school', 'primary school'),
+        ('teenagers', 'teenagers'),
+        ('students', 'students'),
+        ('adults', 'adults'),
+        ('seniors', 'seniors'),
+        ('all', 'all')
+    )
+
+    audiences = MultiSelectField(choices=AUDIENCES, null=True, blank=True)
+
+    class Meta:
+        abstract = True

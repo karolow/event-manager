@@ -6,7 +6,7 @@ from model_clone import CloneMixin
 
 from core.models import (
     Entry,
-    Categories,
+    Category,
     ContactDetails,
     Ownership,
     Status,
@@ -31,7 +31,7 @@ class Project(Entry, ContactDetails):
         return reverse('event_table', args=[str(self.id)])
 
 
-class Event(CloneMixin, Entry, Categories, Ownership, Status):
+class Event(CloneMixin, Entry, Category, Ownership, Status):
     project = models.ForeignKey(
         Project,
         on_delete=models.SET_NULL,
