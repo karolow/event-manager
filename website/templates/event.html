@@ -1,0 +1,13 @@
+{% extends '_base.html' %}
+{% load materializecss %}
+
+{% block title %}Event{% endblock title %}
+
+{% block content %}
+<h2>Event</h2>
+  <form method="post">
+  {% csrf_token %}
+  {{ form|materializecss }}
+  <button type="submit">Save</button>
+</form>
+{% endblock content %}

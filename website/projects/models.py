@@ -1,5 +1,9 @@
 from django.db import models
+from django.urls import reverse
 from django.conf import settings
+
+from model_clone import CloneMixin
+
 from core.models import (
     Entry,
     Categories,
@@ -23,8 +27,11 @@ class Project(Entry, ContactDetails):
         null=True
     )
 
+    def get_absolute_url(self):
+        return reverse('event_table', args=[str(self.id)])
 
-class Event(Entry, Categories, Ownership, Status):
+
+class Event(CloneMixin, Entry, Categories, Ownership, Status):
     project = models.ForeignKey(
         Project,
         on_delete=models.SET_NULL,

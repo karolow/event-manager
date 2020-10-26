@@ -1,0 +1,12 @@
+{% extends '_base.html' %}
+{% load materializecss %}
+
+{% block title %}{{ event.title }}{% endblock title %}
+
+{% block content %}
+<div>
+  <h2>{{ event.title }}</h2>
+  <p>{{ event.audiences }}</p>
+  <p>{{ event.get_status_display }}</p>
+</div>
+{% endblock content %}

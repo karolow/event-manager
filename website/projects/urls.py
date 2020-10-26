@@ -1,12 +1,22 @@
 from django.urls import path
 from .views import (
-    EventListView,
     ProjectListView,
-    FilteredEventTableView,
+    ProjectCreateView,
+    EventTableView,
+    EventCreateView,
+    EventDetailView,
+    EventUpdateView,
+    duplicate_event,
+    EventDeleteView,
 )
 
 urlpatterns = [
     path('projects/', ProjectListView.as_view(), name='project_list'),
-    path('events/', EventListView.as_view(), name='event_list'),
-    path('events/filter', FilteredEventTableView.as_view(), name='event_list_filtered'),
+    path('projects/new/', ProjectCreateView.as_view(), name='project_create'),
+    path('events/', EventTableView.as_view(), name='event_table'),
+    path('events/new/', EventCreateView.as_view(), name='event_create'),
+    path('events/<uuid:pk>/', EventDetailView.as_view(), name='event_detail'),
+    path('events/<uuid:pk>/update/', EventUpdateView.as_view(), name='event_update'),
+    path('events/<uuid:pk>/duplicate/', duplicate_event, name='event_duplicate'),
+    path('events/<uuid:pk>/delete/', EventDeleteView.as_view(), name='event_delete'),
 ]
