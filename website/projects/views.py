@@ -1,5 +1,6 @@
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
+from django.db.models import Count
 
 from django.views.generic import (
     ListView,
@@ -8,6 +9,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
+from django.views.generic.detail import SingleObjectMixin
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
@@ -28,10 +30,18 @@ from .filters import EventFilter
 
 
 # to do – change ListView to TableView
-class ProjectTableView(ListView):
+class ProjectTableView(LoginRequiredMixin,
+                       ListView):
     model = Project
     context_object_name = 'project_list'
     template_name = 'project_table.html'
+
+    def get_queryset(self):
+        projects = Project.objects.filter(
+            supervisor=self.request.user) \
+            .annotate(events_count=Count('event')) \
+            .order_by('-events_count')
+        return projects
 
 
 class ProjectCreateView(LoginRequiredMixin,
@@ -48,10 +58,23 @@ class ProjectCreateView(LoginRequiredMixin,
 
 
 class ProjectDetailView(LoginRequiredMixin,
-                        DetailView):
-    model = Project
-    context_object_name = 'project'
+                        SingleObjectMixin,
+                        ListView):
+    paginate_by = 5
     template_name = 'project_detail.html'
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object(queryset=Project.objects.all())
+        return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['project'] = self.object
+        return context
+
+    def get_queryset(self):
+        user = self.request.user
+        return self.object.event_set.all().filter(supervisor=user)
 
 
 class ProjectUpdateView(LoginRequiredMixin,
