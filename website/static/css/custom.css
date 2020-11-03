@@ -1,0 +1,45 @@
+/* Icons
+========================================================================== */
+
+.inline-icon {
+  vertical-align: middle;
+}
+
+/* Sticky footer
+   ========================================================================== */
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.page-footer {
+  padding-top: 0px;
+  margin-top: 20px;
+  color: #fff;
+  background-color: #00CDF0;
+}
+
+.page-footer .footer-copyright {
+  overflow: hidden;
+  min-height: 50px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 0px;
+  text-align: right;
+}
