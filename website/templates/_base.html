@@ -4,11 +4,14 @@
 <head>
   <meta charset="utf-8">
   <title>{% block title %}Bookstore{% endblock %}</title>
-  {% block css %}
+    <!-- CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.css' %}"  media="screen,projection"/>
-  {% endblock css %}
+    <link type="text/css" rel="stylesheet" href="{% static 'css/custom.css' %}"  media="screen,projection"/>
+    <!-- JavaScript -->
+    <script src="{% static "js/jquery-3.3.1.min.js" %}"></script>
+    <script src="{% static "js/materialize.min.js" %}"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 
@@ -21,23 +24,12 @@
   </main>
 
   <!-- JavaScript -->
-  {% block javascript %}
-  <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-  <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
   <script>
     $(document).ready(function(){
-
-      // Initialize materialize data picker
       $('.datepicker').datepicker({'format': 'yyyy-mm-dd'});
       $('.dropdown-trigger').dropdown({constrainWidth: false});
       $('select').formSelect();
-      $('.fixed-action-btn').floatingActionButton();
-
     });
   </script>
-  {% endblock javascript %}
 </body>
 </html>
