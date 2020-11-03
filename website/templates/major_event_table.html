@@ -1,0 +1,26 @@
+{% extends '_base.html' %}
+{% load django_tables2 %}
+
+{% block title %}Events{% endblock title %}
+
+{% block content %}
+
+{% if filter %}
+  <form action="" method="get" class="form form-inline">
+    {{ filter.form }}
+    <button type="submit" name="button">Search</button>
+  </form>
+{% endif %}
+
+{% render_table table %}
+
+<!-- Export Dropdown -->
+<a class='dropdown-trigger btn' href='#' data-target='data_export'><i class="material-icons left">arrow_drop_down</i>Export</a>
+
+<ul id='data_export' class='dropdown-content'>
+{% for format in view.export_formats %}
+  <li><a href="{% export_url format %}">{{ format }}</a></li>
+{% endfor %}
+</ul>
+
+{% endblock content %}
