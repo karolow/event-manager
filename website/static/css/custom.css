@@ -1,8 +1,47 @@
+/* Global
+   ========================================================================== */
+
+.container {
+  margin: 0 auto;
+  max-width: 1220px;
+  width: 90%;
+}
+
 /* Icons
 ========================================================================== */
 
 .inline-icon {
   vertical-align: middle;
+}
+
+/* Navbar
+  ========================================================================== */
+
+nav {
+  background-color: #2979ff;
+}
+
+nav .brand-logo {
+  position: relative;
+  font-size: 1.3rem;
+  font-weight: 700;
+  float: left;
+}
+
+nav ul a {
+  font-size: 1.1rem;
+}
+
+.navbar-fixed {
+  margin-bottom: 30px;
+}
+
+.logo-adjacent {
+  display: inline;
+}
+
+li.logo-distance {
+  margin-left: 1rem;
 }
 
 /* Sticky footer
@@ -42,4 +81,105 @@ main {
           justify-content: space-between;
   padding: 0px;
   text-align: right;
+}
+
+.inline-icon {
+  vertical-align: middle;
+  font-size: 1.7rem !important;
+}
+
+/* table
+   ========================================================================== */
+
+tr {
+  font-size: 1rem;
+}
+
+
+/* 28.10.2020 Navarra-Lab
+   ========================================================================== */
+
+@media (max-width: 992px) {
+  nav .brand-logo {
+    position: absolute;
+    float: none;
+  }
+}
+.file-field .btn span{
+  font-size: 13px;
+  line-height: 2.3rem;
+}
+.file-field input[type="file"]{
+  z-index: 11;
+}
+.file-path-wrapper .file-path{
+  position: relative;
+  padding-right: 40px !important;
+  box-sizing: border-box !important;
+}
+.file-path-wrapper .clear-file-input{
+  position: absolute;
+  z-index: 12;
+  top: 0;
+  right: 0;
+  padding: 9px 0 9px 9px;
+  cursor: pointer;
+}
+#coordinates-mw-wrap{
+  width: 100%;
+  min-width: auto;
+}
+#coordinates-mw-wrap .mw-coordinates-overlay{
+  background-color: #fff;
+}
+#coordinates-mw-wrap .mw-coordinates-overlay input.form-control{
+  width: 100%;
+}
+#coordinates-mw-wrap .mw-header .mw-adress-input-wrap{
+  width: 100%;
+  float: left;
+  margin-bottom: 1rem;
+}
+.mw-btn {
+  background-color: #00CDF0 !important;
+  border-color: #00CDF0 !important;
+}
+a.mw-btn i{
+  color: #fff !important;
+}
+.mw-btn-add-marker,
+.mw-btn-delete {
+  height: 34px;
+  padding: 2px 8px 2px;
+}
+.mw-btn-delete {
+  background-color: #F02400 !important;
+  border-color: #F02400 !important;
+  color: #fff;
+}
+a.mw-btn-delete i,
+a.mw-btn-coordinates i,
+a.mw-btn-add-marker i{
+  color: #fff !important;
+}
+.row {
+  margin-bottom: 0;
+}
+.row > .col {
+  padding-right: 0.75rem;
+  padding-left: 0.75rem;
+}
+.add-location-row{
+  margin-bottom: 1rem;
+}
+.pac-container{
+  z-index: 9999;
+}
+@media (max-width: 600px) {
+  a[class*="mw-btn"] {
+    margin-bottom: 1rem;
+  }
+  #location_form .row{
+    margin-bottom: 0;
+  }
 }
