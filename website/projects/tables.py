@@ -13,9 +13,8 @@ class EventTable(tables.Table):
     '''
 
     title = columns.LinkColumn('event_detail', args=[A('pk')])
-    project = columns.Column(visible=False)
+    project = columns.Column()
     type = columns.Column(visible=False)
-    end_at = columns.DateColumn(format='d-M-y', visible=False)
     # timetable = columns.Column(visible=False)
     # partners = columns.Column(visible=False)
     # online = columns.Column(visible=False)
@@ -29,9 +28,9 @@ class EventTable(tables.Table):
     # contact_person = columns.Column(visible=False)
     # comment = columns.Column(visible=False)
     start_at = tables.DateTimeColumn(format='d-m-y')
-    # end_at = tables.DateTimeColumn(format='d-m-y', visible=False)
+    end_at = tables.DateTimeColumn(format='d-m-y')
     actions = tables.TemplateColumn(ACTIONS, verbose_name="")
 
     class Meta:
         model = Event
-        fields = ('title', 'start_at', 'status', 'actions')
+        fields = ('title', 'project', 'start_at', 'end_at', 'status', 'actions')
