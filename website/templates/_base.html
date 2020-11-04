@@ -16,11 +16,21 @@
 </head>
 
 <body>
+
   <main>
     <div class="container">
     {% block content %}
     {% endblock content %}
     </div>
+    {% if '/events/' in request.path and '/new/' not in request.path %}
+      <div class="fixed-action-btn">
+        <a href="{% url 'event_create' %}" class="btn-floating btn-large waves-effect waves-light indigo accent-2"><i class="material-icons">add</i></a>
+      </div>
+    {% elif '/projects/' in request.path and '/new/' not in request.path %}
+      <div class="fixed-action-btn">
+        <a href="{% url 'project_create' %}" class="btn-floating btn-large waves-effect waves-light indigo accent-2"><i class="material-icons">add</i></a>
+      </div>
+    {% endif %}
   </main>
 
   {% include 'footer.html' %}
@@ -31,6 +41,7 @@
       $('.datepicker').datepicker({'format': 'yyyy-mm-dd'});
       $('.dropdown-trigger').dropdown({constrainWidth: false});
       $('select').formSelect();
+      $('.fixed-action-btn').floatingActionButton();
     });
   </script>
 </body>
