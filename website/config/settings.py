@@ -164,3 +164,4 @@ ACCOUNT_UNIQUE_EMAIL = True
 
 # custom context processor
 CONTACT_EMAIL = 'info@medialabkatowice.eu'
+PROJECT_NAME = 'Event Manager'
