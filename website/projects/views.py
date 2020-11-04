@@ -164,6 +164,11 @@ class EventUpdateView(LoginRequiredMixin,
     success_url = reverse_lazy('event_table')
     template_name = 'event.html'
 
+    def get_form_kwargs(self):
+        kwargs = super(EventUpdateView, self).get_form_kwargs()
+        kwargs.update({'project_user': self.request.user})
+        return kwargs
+
     def test_func(self):
         obj = self.get_object()
         return obj.supervisor == self.request.user
