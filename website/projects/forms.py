@@ -19,3 +19,8 @@ class EventForm(forms.ModelForm):
         exclude = (
             'supervisor',
         )
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('project_user')
+        super(EventForm, self).__init__(*args, **kwargs)
+        self.fields['project'].queryset = Project.objects.filter(supervisor=user)

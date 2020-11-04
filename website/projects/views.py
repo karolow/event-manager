@@ -143,6 +143,11 @@ class EventCreateView(LoginRequiredMixin,
         event.save()
         return super().form_valid(form)
 
+    def get_form_kwargs(self):
+        kwargs = super(EventCreateView, self).get_form_kwargs()
+        kwargs.update({'project_user': self.request.user})
+        return kwargs
+
 
 class EventDetailView(LoginRequiredMixin,
                       DetailView):
