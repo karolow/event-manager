@@ -2,12 +2,103 @@
 {% load materializecss %}
 
 {% block title %}Event{% endblock title %}
-
 {% block content %}
-<h2>Event</h2>
-  <form method="post">
-  {% csrf_token %}
-  {{ form|materializecss }}
-  <button type="submit">Save</button>
-</form>
+<div class="row">
+  <div class="col l8 s12 offset-l2">
+    <h2>Event</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.title|materializecss }}
+      <div class="row">
+        <div class="col s12 m6">
+          {{ form.project|materializecss }}
+        </div>
+        <div class="col s12 m6">
+          {{ form.type|materializecss }}
+        </div>
+      </div>
+      {{ form.description|materializecss:'icon=text_fields' }}
+      <div class="row">
+        <div class="col s12 m6">
+          {{ form.location|materializecss }}
+        </div>
+        <div class="col s12 m6">
+          {{ form.room|materializecss }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 m6">
+          {{ form.start_at|materializecss }}
+        </div>
+        <div class="col s12 m6">
+          {{ form.end_at|materializecss }}
+        </div>
+      </div>
+      {{ form.timetable|materializecss }}
+      <div class="row">
+        <div class="col s12 m4">
+          {{ form.fields|materializecss }}
+        </div>
+        <div class="col s12 m4">
+          {{ form.audiences|materializecss }}
+        </div>
+        <div class="col s12 m4">
+          {{ form.online|materializecss }}
+          {{ form.tickets|materializecss }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 m6">
+          {{ form.ownership|materializecss }}
+        </div>
+        <div class="col s12 m6">
+          {{ form.partners|materializecss }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 m6">
+          {{ form.fees|materializecss:'icon=money' }}
+        </div>
+        <div class="col s12 m6">
+          {{ form.budget|materializecss }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 m6">
+          {{ form.particip_num_predict|materializecss }}
+        </div>
+        <div class="col s12 m6">
+          {{ form.particip_num_actual|materializecss }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 m6">
+          {{ form.link|materializecss:'icon=link' }}
+        </div>
+        <div class="col s12 m6">
+          {{ form.registr_link|materializecss }}
+        </div>
+      </div>
+      {{ form.comment|materializecss }}
+      <div class="row">
+        <div class="col s12 m6">
+          {{ form.status|materializecss:'icon=assignment' }}
+        </div>
+        <div class="col s12 m6">
+          {{ form.contact_person|materializecss:'icon=face' }}
+        </div>
+      </div>
+      <button class="btn waves-effect waves-light" type="submit">Save<i class="material-icons right">send</i></button>
+    </form>
+  </div>
+</div>
 {% endblock content %}
+{{ form.|materializecss }}
+<div class="row">
+  <div class="col s12 m6">
+    {{ form.|materializecss }}
+  </div>
+  <div class="col s12 m6">
+    {{ form.|materializecss }}
+  </div>
+</div>
