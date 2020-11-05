@@ -17,7 +17,7 @@ class PersistentItem(models.Model):
 
 
 class Entry(PersistentItem):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=100)
     description = models.TextField(max_length=5000, blank=True)
     location = models.CharField(max_length=255, blank=True)
     room = models.CharField(max_length=255, blank=True)
