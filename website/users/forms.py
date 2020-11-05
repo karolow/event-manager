@@ -25,13 +25,13 @@ class CustomUserChangeForm(UserChangeForm):
 
 
 class ExtendedSignupForm(SignupForm):
-    organisation = forms.ModelChoiceField(
+    organization = forms.ModelChoiceField(
         queryset=Organization.objects.all(),
         empty_label="Select your organization"
     )
 
     def save(self, request):
         user = super(ExtendedSignupForm, self).save(request)
-        user.phone = self.cleaned_data['organization']
+        user.organization = self.cleaned_data['organization']
         user.save()
         return user

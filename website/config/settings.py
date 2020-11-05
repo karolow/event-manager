@@ -162,6 +162,8 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+ACCOUNT_FORMS = {'signup': 'users.forms.ExtendedSignupForm'}
 
 # custom context processor
 CONTACT_EMAIL = 'info@medialabkatowice.eu'

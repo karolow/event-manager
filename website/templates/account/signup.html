@@ -1,0 +1,15 @@
+{% extends '_base.html' %}
+{% load materializecss %}
+
+{% block title %}Sign Up{% endblock title %}
+
+{% block content %}
+  <h2>Sign Up</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.email|materializecss }}
+    {{ form.password1|materializecss }}
+    {{ form.organization|materializecss }}
+    <button class="btn waves-effect waves-light" type="submit">Sign Up</button>
+  </form>
+{% endblock content %}
