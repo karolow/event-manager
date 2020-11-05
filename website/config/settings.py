@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
+from django.conf.global_settings import DATETIME_INPUT_FORMATS
+
 from pathlib import Path
 from environ import Env
 
@@ -168,3 +170,7 @@ ACCOUNT_FORMS = {'signup': 'users.forms.ExtendedSignupForm'}
 # custom context processor
 CONTACT_EMAIL = 'info@medialabkatowice.eu'
 PROJECT_NAME = 'Event Manager'
+
+# DateTime Picker (MaterializeCSS)
+# ISO 8601 datetime format to accept html5 datetime input values
+DATETIME_INPUT_FORMATS += ["%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M"]

@@ -27,11 +27,23 @@
         </div>
       </div>
       <div class="row">
-        <div class="col s12 m6">
-          {{ form.start_at|materializecss }}
+        <div class="input-field col s12 m6">
+          <div id="{{ form.start_at.name }}">
+            <div class="input-field col s12">
+              <i class="material-icons prefix">schedule</i>
+              <input type="text" id="id_{{ form.start_at.name }}" name="{{ form.start_at.name }}" value="{{ form.start_at.value|date:'Y-m-d H:i' }}" class=" validate">
+              <label for="id_{{ form.start_at.name }}">{{ form.start_at.label }}</label>
+            </div>
+          </div>
         </div>
-        <div class="col s12 m6">
-          {{ form.end_at|materializecss }}
+        <div class="input-field col s12 m6">
+          <div id="{{ form.end_at.name }}">
+            <div class="input-field col s12">
+              <i class="material-icons prefix">schedule</i>
+              <input type="text" id="id_{{ form.end_at.name }}" name="{{ form.end_at.name }}" value="{{ form.end_at.value|date:'Y-m-d H:i' }}" class=" validate">
+              <label for="id_{{ form.end_at.name }}">{{ form.end_at.label }}</label>
+            </div>
+          </div>
         </div>
       </div>
       {{ form.timetable|materializecss }}
@@ -92,13 +104,39 @@
     </form>
   </div>
 </div>
+
+<script>
+    jQuery(document).ready(function(){
+
+        // Initialize materialize data picker
+        var dummyTime = null;
+        var currentDateElem = null;
+        var dateObj = new Date();
+
+        jQuery('#id_start_at,#id_end_at').datepicker({
+            format: 'yyyy-mm-dd',
+            onClose: function () {
+                currentDateElem = this.el;
+                if(currentDateElem.value !== '') {
+                    $('body').append('<input type="hidden" id="dummyTime">')
+                    dummyTime = $("#dummyTime");
+                    dummyTime.timepicker({
+                        twelveHour: false,
+                        onCloseEnd: function () {
+                            var time = dummyTime.val();
+                            if (time === '') {
+                                time = dateObj.getHours() + ':' + (dateObj.getMinutes() < 10 ? '0' + dateObj.getMinutes() : dateObj.getMinutes() );
+                            }
+                            currentDateElem.value = currentDateElem.value.replace(/\s\d{2}:\d{2}/, '') + ' ' + time;
+                            currentDateElem = null;
+                            dummyTime.remove()
+                        }
+                    });
+                    dummyTime.trigger('click');
+                }
+            }
+        });
+
+    });
+</script>
 {% endblock content %}
-{{ form.|materializecss }}
-<div class="row">
-  <div class="col s12 m6">
-    {{ form.|materializecss }}
-  </div>
-  <div class="col s12 m6">
-    {{ form.|materializecss }}
-  </div>
-</div>
