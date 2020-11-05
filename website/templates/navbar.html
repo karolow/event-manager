@@ -12,7 +12,12 @@
         <div class="container">
 
             <!-- Logo -->
-            <a href="{% url 'event_table' %}" class="brand-logo">{{ organization_name }}</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'event_table' %}" class="brand-logo">{{ organization_name }}</a>
+            {% else %}
+                <a href="#" class="brand-logo">{{ project_name }}</a>
+            {% endif %}
+
             <!-- Sidenav -->
             <a href="#" class="sidenav-trigger" data-target="mobile-links"><i class="material-icons">menu</i></a>
 

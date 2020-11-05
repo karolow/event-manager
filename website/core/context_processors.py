@@ -1,10 +1,19 @@
 from django.conf import settings
 
 
-def contact_email_context_processor(request):
+def any_user(request):
     kwargs = {
-        'contact_email': settings.CONTACT_EMAIL,
         'project_name': settings.PROJECT_NAME,
-        'organization_name': request.user.organization,
+        'contact_email': settings.CONTACT_EMAIL,
     }
     return kwargs
+
+
+def authenticated_user(request):
+    if request.user.is_authenticated:
+        kwargs = {
+            'organization_name': request.user.organization,
+        }
+        return kwargs
+    else:
+        return {}
