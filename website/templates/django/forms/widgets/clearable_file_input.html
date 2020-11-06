@@ -1,0 +1,2 @@
+<input type="{{ widget.type }}" value="{{ widget.value }}" name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %} />
+<input type="checkbox" name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}"{% if widget.attrs.disabled %} disabled{% endif %}>
