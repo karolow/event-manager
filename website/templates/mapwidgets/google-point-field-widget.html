@@ -1,0 +1,92 @@
+{% load i18n %}
+{% load static %}
+<link href="{% static 'mapwidgets/css/map_widgets.css' %}" type="text/css" media="all" rel="stylesheet">
+<div class="mw-wrap" id="{{ name }}-mw-wrap">
+    {% block container %}
+    <div class="mw-header">
+        {% block header %}
+        <div class="mw-adress-input-wrap pull-right">
+            <input type="text" class="form-control pull-right" id="{{ name }}-mw-google-address-input" placeholder="{% trans 'Enter the place or address here' %}"/>
+        </div>
+        <div class="mw-coordinates-wrap">
+            <a class="waves-effect waves-light btn-small mw-btn-coordinates">{% trans "Coordinates" %} <i class="material-icons right">keyboard_arrow_down</i></a>
+            <div class="mw-coordinates-overlay hide">
+                <label for="{{ name }}-mw-overlay-latitude">
+                    {% trans "Latitude:" %}
+                    <input type="text" id="{{ name }}-mw-overlay-latitude" class="form-control mw-overlay-input mw-overlay-latitude" placeholder="{% trans 'Ex: 41.015137' %}"/>
+                </label>
+                <label for="{{ name }}-mw-overlay-longitude">
+                    {% trans "Longitude:" %}
+                    <input type="text" id="{{ name }}-mw-overlay-longitude" class="form-control mw-overlay-input mw-overlay-longitude" placeholder="{% trans 'Ex: 28.979530' %}"/>
+                </label>
+                <a class="waves-effect waves-light btn-small mw-btn-coordinates-done pull-right">{% trans "Done" %}</a>
+            </div>
+        </div>
+        <a class="waves-effect waves-light btn-small mw-btn-my-location">{% trans "Use My Location" %}</a>
+        <a class="waves-effect waves-light btn-small mw-btn-add-marker"><i class="material-icons">add_location</i></a>
+        <a class="waves-effect waves-light btn-small mw-btn-delete"><i class="material-icons">delete</i></a>
+        {% endblock header %}
+    </div>
+
+    <div class="mw-map-wrapper">
+        <div class="mw-loader-overlay hide" >
+            <div class="mw-loader"></div>
+        </div>
+        <div id="{{ name }}-map-elem" class="mw-map"></div>
+        <div style="display: none" class="hide">
+            <textarea id="{{ id }}" name="{{ name }}">{{ serialized }}</textarea>
+            {% block extra_input %}
+            {% endblock extra_input %}
+
+        </div>
+    </div>
+
+    <div class="mw-footer">
+        <span class="mw-help-text help-text"></span>
+    </div>
+    <div class="animated-loader"></div>
+    {% endblock container %}
+</div>
+
+{% block javascript %}
+<script type="application/javascript">
+
+        var mapOptions = JSON.parse("{{ options|escapejs }}");
+        var field_value = JSON.parse("{{ field_value|escapejs }}");
+
+        var wrapElemSelector = "#{{ name }}-mw-wrap";
+        var mapElemID = "{{ name }}-map-elem";
+        var googleAutoInputID = "{{ name }}-mw-google-address-input";
+        var locationInputID = "#{{ id }}";
+
+        var mapWidgetOptions = {
+            locationInput: $(locationInputID),
+            wrapElemSelector: wrapElemSelector,
+            locationFieldValue: field_value,
+            mapElement: document.getElementById(mapElemID),
+            mapCenterLocationName: mapOptions.mapCenterLocationName,
+            mapCenterLocation: mapOptions.mapCenterLocation,
+            coordinatesOverlayToggleBtn: $(".mw-btn-coordinates", wrapElemSelector),
+            coordinatesOverlayDoneBtn: $(".mw-btn-coordinates-done", wrapElemSelector),
+            coordinatesOverlayInputs: $(".mw-overlay-input", wrapElemSelector),
+            coordinatesOverlay: $(".mw-coordinates-overlay", wrapElemSelector),
+            myLocationBtn: $(".mw-btn-my-location", wrapElemSelector),
+            addressAutoCompleteInput: document.getElementById(googleAutoInputID),
+            deleteBtn: $(".mw-btn-delete", wrapElemSelector),
+            addMarkerBtn: $(".mw-btn-add-marker", wrapElemSelector),
+            loaderOverlayElem: $(".mw-loader-overlay", wrapElemSelector),
+            zoom: mapOptions.zoom,
+            markerFitZoom: mapOptions.markerFitZoom,
+            GooglePlaceAutocompleteOptions: mapOptions.GooglePlaceAutocompleteOptions,
+            markerCreateTriggerNameSpace: "google_point_map_widget:marker_create",
+            markerChangeTriggerNameSpace: "google_point_map_widget:marker_change",
+            markerDeleteTriggerNameSpace: "google_point_map_widget:marker_delete",
+            placeChangedTriggerNameSpace: "google_point_map_widget:place_changed"
+        };
+        var widget = new DjangoGooglePointFieldWidget(mapWidgetOptions);
+        {% block extra_javascript %}
+
+        {% endblock %}
+
+</script>
+{% endblock javascript %}

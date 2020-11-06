@@ -1,6 +1,10 @@
 from django import forms
+from django.utils.translation import ugettext_lazy as _
+
+from mapwidgets.widgets import GooglePointFieldWidget
 
 from .models import Project, Event
+from core.models import Location
 
 
 class ProjectForm(forms.ModelForm):
@@ -34,3 +38,21 @@ class EventForm(forms.ModelForm):
         user = kwargs.pop('project_user')
         super(EventForm, self).__init__(*args, **kwargs)
         self.fields['project'].queryset = Project.objects.filter(supervisor=user)
+
+
+class LocationForm(forms.ModelForm):
+
+    class Meta:
+        model = Location
+        fields = '__all__'
+        widgets = {
+            'coordinates': GooglePointFieldWidget,
+        }
+        labels = {
+            "name": _("Name"),
+            "coordinates": _(""),
+            "street": _("Street"),
+            "street_number": _("Street number"),
+            "city": _("City"),
+            "postal_code": _("Postal code"),
+        }

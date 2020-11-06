@@ -39,14 +39,48 @@
 
   <!-- JavaScript -->
   <script>
-    $(document).ready(function(){
-      $('.datepicker').datepicker({'format': 'yyyy-mm-dd'});
-      $('.dropdown-trigger').dropdown({constrainWidth: false});
-      $('select').formSelect();
-      $('.sidenav').sidenav();
-      $('.fixed-action-btn').floatingActionButton();
-      $('.char_count, textarea[id*="description"], textarea[id*="comment"]').characterCounter();
-    });
+        $(document).ready(function(){
+          // other
+          $('select:not([name="location"])').formSelect();
+          // $('select').formSelect();
+          $('.fixed-action-btn').floatingActionButton();
+          $('.char_count, textarea[id*="description"], textarea[id*="comment"]').characterCounter();
+          // form dropdown
+          $('.dropdown-trigger').dropdown({
+            constrainWidth: true,
+            hover: false,
+            belowOrigin: true,
+            alignment: 'left'
+          });
+          // navbar dropdown
+          $('.dropdown-trigger-nav').dropdown({
+            constrainWidth: false,
+            hover: false,
+            belowOrigin: true,
+            alignment: 'left'
+          });
+          // side navigation (smaller screens)
+          $('.sidenav').sidenav();
+          $('.file-field input[type="file"]').on('change', function(){
+              if($(this).val() !== '') {
+                  var parent = $(this).parent();
+                  parent.find('input[type="checkbox"]').prop('checked', false);
+                  parent.parent().find('.clear-file-input').show();
+              }
+          })
+          $('.clear-file-input').on('click', function(){
+              var parent = $(this).hide().parent();
+              parent.find('input').val("")
+              parent.parent().find('input[type="file"]').val("")
+              parent.parent().find('input[type="checkbox"]').prop('checked', true);
+          })
+
+            $('.file-path-wrapper .file-path').each(function(){
+                if($(this).val() !== '') {
+                    $(this).parent().find('.clear-file-input').show();
+                }
+            })
+        });
   </script>
 </body>
 </html>

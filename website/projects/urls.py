@@ -12,6 +12,7 @@ from .views import (
     EventUpdateView,
     duplicate_event,
     EventDeleteView,
+    LocationCreateView,
 )
 
 urlpatterns = [
@@ -27,4 +28,5 @@ urlpatterns = [
     path('events/<uuid:pk>/update/', EventUpdateView.as_view(), name='event_update'),
     path('events/<uuid:pk>/duplicate/', duplicate_event, name='event_duplicate'),
     path('events/<uuid:pk>/delete/', EventDeleteView.as_view(), name='event_delete'),
+    path('locations/new/', LocationCreateView.as_view(), name='location_create'),
 ]
