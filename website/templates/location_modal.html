@@ -1,0 +1,35 @@
+{% extends "_base.html" %}
+{% load i18n %}
+{% load materializecss %}
+
+{% block content %}
+
+<div id="location_form" class="row">
+  <div class="col s24">
+    <h1>{% trans "Add location" %}</h1>
+    <form id="locationForm" method="POST" action="/locations/new/">
+      {% csrf_token %}
+      {{ form.name|materializecss }}
+      {{ form.coordinates|materializecss }}
+      <div class="row">
+        <div class="col s12 m6">
+          {{ form.street|materializecss }}
+        </div>
+        <div class="col s12 m6">
+          {{ form.street_number|materializecss }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 m6">
+          {{ form.city|materializecss }}
+        </div>
+        <div class="col s12 m6">
+          {{ form.postal_code|materializecss }}
+        </div>
+      </div>
+      <button type="submit" name="_submit" class="btn waves-effect waves-light">Save</button>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}

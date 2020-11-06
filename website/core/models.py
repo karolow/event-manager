@@ -1,5 +1,5 @@
 import uuid
-from django.db import models
+from django.contrib.gis.db import models
 from multiselectfield import MultiSelectField
 
 
@@ -130,3 +130,15 @@ class Category(models.Model):
 
     class Meta:
         abstract = True
+
+
+class Location(PersistentItem):
+    name = models.CharField(max_length=50)
+    coordinates = models.PointField()
+    street = models.CharField(max_length=50, blank=True)
+    street_number = models.CharField(max_length=50, blank=True)
+    city = models.CharField(max_length=50, blank=True)
+    postal_code = models.CharField(max_length=6, blank=True)
+
+    def __str__(self):
+        return self.name

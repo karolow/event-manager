@@ -9,6 +9,8 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /website
 
 # Install dependencies
+RUN apt-get update &&\
+    apt-get install -y binutils libproj-dev gdal-bin
 COPY Pipfile Pipfile.lock /website/
 RUN pip install pipenv && pipenv install --system
 

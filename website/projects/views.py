@@ -21,9 +21,12 @@ from .models import (
     Project,
     Event,
 )
+from core.models import Location
+
 from .forms import (
     ProjectForm,
     EventForm,
+    LocationForm,
 )
 from .tables import EventTable
 from .filters import EventFilter
@@ -186,7 +189,6 @@ def duplicate_event(request, **kwargs):
 class EventDeleteView(LoginRequiredMixin,
                       UserPassesTestMixin,
                       DeleteView):
-
     model = Event
     success_url = reverse_lazy('event_table')
     template_name = 'event_delete.html'
@@ -194,3 +196,10 @@ class EventDeleteView(LoginRequiredMixin,
     def test_func(self):
         obj = self.get_object()
         return obj.supervisor == self.request.user
+
+
+class LocationCreateView(LoginRequiredMixin,
+                         CreateView):
+    model = Location
+    form_class = LocationForm
+    template_name = 'location_modal.html'
