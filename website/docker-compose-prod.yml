@@ -3,7 +3,7 @@ version: '3.7'
 services:
   web:
     build: .
-    command: python /website/manage.py runserver 0.0.0.0:8000
+    command: gunicorn event_manager.wsgi -b 0.0.0.0:8000
     ports:
       - 8000:8000
     depends_on:
