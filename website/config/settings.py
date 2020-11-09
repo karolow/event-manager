@@ -173,6 +173,8 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_FORMS = {'signup': 'users.forms.ExtendedSignupForm'}
 
+ADMIN_URL = env('ADMIN_URL')
+
 # custom context processor
 CONTACT_EMAIL = 'info@medialabkatowice.eu'
 PROJECT_NAME = 'Event Manager'
