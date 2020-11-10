@@ -11,15 +11,10 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
+from pathlib import Path
 from django.conf.global_settings import DATETIME_INPUT_FORMATS
 
-from pathlib import Path
-from environ import Env
-
-
-# Read environment variables
-env = Env()
-env.read_env(env_file='config/.env')
+import dj_database_url
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -30,10 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool("DEBUG", default=False)
+DEBUG = os.environ.get("DEBUG", default=False)
 
 ALLOWED_HOSTS = ['ktw-event-manager.herokuapp.com', 'localhost', '127.0.0.1']
 
@@ -103,10 +98,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db()
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+    }
 }
-
-DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation
@@ -173,7 +170,16 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_FORMS = {'signup': 'users.forms.ExtendedSignupForm'}
 
-ADMIN_URL = env('ADMIN_URL')
+ADMIN_URL = os.environ['ADMIN_URL']
+
+# email configuration
+
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'bogumil.bot@gmail.com'
+DEFAULT_FROM_EMAIL = 'bogumil.bot@gmail.com'
 
 # custom context processor
 CONTACT_EMAIL = 'info@medialabkatowice.eu'
@@ -183,11 +189,17 @@ PROJECT_NAME = 'Event Manager'
 # ISO 8601 datetime format to accept html5 datetime input values
 DATETIME_INPUT_FORMATS += ["%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M"]
 
+# Production settings
+ENVIRONMENT = os.environ.get('ENVIRONMENT', default='development')
 
-SECURE_SSL_REDIRECT = env.bool("DJANGO_SECURE_SSL_REDIRECT", default=True)
-SECURE_HSTS_SECONDS = env.int("DJANGO_SECURE_HSTS_SECONDS", default=2592000)
-SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool("DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS", default=True)
-SECURE_HSTS_PRELOAD = env.bool("DJANGO_SECURE_HSTS_PRELOAD", default=True)
-SESSION_COOKIE_SECURE = env.bool("DJANGO_SESSION_COOKIE_SECURE", default=True)
-CSRF_COOKIE_SECURE = env.bool("DJANGO_CSRF_COOKIE_SECURE", default=True)
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+if ENVIRONMENT == 'production':
+    SECURE_BROWSER_XSS_FILTER = True
+    X_FRAME_OPTIONS = 'DENY'
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = 3600
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
