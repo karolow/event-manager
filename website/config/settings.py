@@ -170,7 +170,8 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_FORMS = {'signup': 'users.forms.ExtendedSignupForm'}
 
-ADMIN_URL = os.environ['ADMIN_URL']
+# ADMIN_URL = os.environ['ADMIN_URL']
+ADMIN_URL = 'test_admin'
 
 # email configuration
 
