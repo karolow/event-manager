@@ -2,6 +2,11 @@ version: '3.7'
 
 services:
   web:
+    env_file:
+      - config/.env
+    environment:
+      - ENVIRONMENT=production
+      - DEBUG=0
     build: .
     command: gunicorn config.wsgi -b 0.0.0.0:8000
     ports:
