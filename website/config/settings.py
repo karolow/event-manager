@@ -153,25 +153,27 @@ STATICFILES_FINDERS = [
 AUTH_USER_MODEL = 'users.CustomUser'
 
 # django-allauth config
-LOGIN_REDIRECT_URL = 'home'
-ACCOUNT_LOGOUT_REDIRECT = 'home'
+LOGIN_REDIRECT_URL = 'event_table'
+ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
 SITE_ID = 1
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     # login by email
     'allauth.account.auth_backends.AuthenticationBackend',
 )
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_FORMS = {'signup': 'users.forms.ExtendedSignupForm'}
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 
-# ADMIN_URL = os.environ['ADMIN_URL']
-ADMIN_URL = 'test_admin'
+ADMIN_URL = os.environ['ADMIN_URL']
+# ADMIN_URL = 'test_admin'
 
 # email configuration
 
@@ -181,6 +183,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = 'bogumil.bot@gmail.com'
 DEFAULT_FROM_EMAIL = 'bogumil.bot@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ['SMTP_PASSWORD']
 
 # custom context processor
 CONTACT_EMAIL = 'info@medialabkatowice.eu'

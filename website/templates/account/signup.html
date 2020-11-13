@@ -1,15 +1,20 @@
 {% extends '_base.html' %}
+{% load i18n %}
 {% load materializecss %}
 
-{% block title %}Sign Up{% endblock title %}
+{% block title %}{% trans "Sign up" %}{% endblock title %}
 
 {% block content %}
-  <h2>Sign Up</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.email|materializecss }}
-    {{ form.password1|materializecss }}
-    {{ form.organization|materializecss }}
-    <button class="btn waves-effect waves-light" type="submit">Sign Up</button>
-  </form>
+<div class="row">
+  <div class="col l4 m6 s12 offset-l4 offset-m3">
+    <h1>{% trans "Sign up" %}</h1>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.email|materializecss }}
+      {{ form.password1|materializecss }}
+      {{ form.organization|materializecss }}
+      <button class="btn waves-effect waves-light" type="submit">{% trans "Sign up" %}</button>
+    </form>
+  </div>
+</div>
 {% endblock content %}
