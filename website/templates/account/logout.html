@@ -1,13 +1,19 @@
 {% extends '_base.html' %}
+{% load i18n %}
+{% load materializecss %}
 
-{% block title %}Log Out{% endblock %}
+{% block title %}{% trans "Log out" %}{% endblock title %}
 
 {% block content %}
-  <h1>Log Out</h1>
-  <p>Are you sure you want to log out?</p>
-  <form method="post" action="{% url 'account_logout' %}">
-    {% csrf_token %}
-    {{ form }}
-    <button class="btn btn-danger" type="submit">Log Out</button>
-  </form>
+<div class="row">
+  <div class="col l4 m6 s12 offset-l4 offset-m3">
+    <h1>{% trans "Log out" %}</h1>
+    <p>{% trans "Are you sure you want to log out?" %}</p>
+    <form method="post" action="{% url 'account_logout' %}">
+      {% csrf_token %}
+      {{ form }}
+      <button class="btn waves-effect waves-light" type="submit">{% trans "Log out" %}</button>
+    </form>
+  </div>
+</div>
 {% endblock content %}
