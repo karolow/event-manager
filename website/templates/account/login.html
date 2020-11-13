@@ -1,13 +1,32 @@
 {% extends '_base.html' %}
+{% load i18n %}
 {% load materializecss %}
 
-{% block title %}Log In{% endblock title %}
+{% block title %}{% trans "Log in" %}{% endblock title %}
 
 {% block content %}
-  <h2>Log In</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form|materializecss }}
-    <button class="btn btn-success" type="submit">Log In</button>
-  </form>
+<div class="row">
+  <div class="col l4 m6 s12 offset-l4 offset-m3">
+    <h1>{% trans "Log in" %}</h1>
+    <form method="post">
+      {% csrf_token %}
+      {{ form|materializecss }}
+      <button class="btn waves-effect waves-light" type="submit">{% trans "Log in" %}</button>
+    </form>
+    <div>
+      <p class="auth-helper-text">
+        {% trans "Need an account?" %}
+        <a href="{% url 'account_signup' %}">
+          {% trans "Sign up now" %}
+        </a>
+      </p>
+      <p class="auth-helper-text">
+        {% trans "Forgotten password?" %}
+        <a href="{% url 'account_reset_password' %}">
+          {% trans "Reset it" %}
+        </a>
+      </p>
+    </div>
+  </div>
+</div>
 {% endblock content %}
