@@ -43,7 +43,7 @@
           <div id="{{ form.start_at.name }}">
             <div class="input-field col s12">
               <i class="material-icons prefix">schedule</i>
-              <input type="text" id="id_{{ form.start_at.name }}" name="{{ form.start_at.name }}" value="{{ form.start_at.value|date:'Y-m-d H:i' }}" class=" validate">
+              <input type="text" id="id_{{ form.start_at.name }}" name="{{ form.start_at.name }}" {% if form.start_at.value %}value="{{ form.start_at.value|date:'Y-m-d H:i' }}"{% endif %} class=" validate">
               <label for="id_{{ form.start_at.name }}">{{ form.start_at.label }}</label>
             </div>
           </div>
@@ -52,7 +52,7 @@
           <div id="{{ form.end_at.name }}">
             <div class="input-field col s12">
               <i class="material-icons prefix">schedule</i>
-              <input type="text" id="id_{{ form.end_at.name }}" name="{{ form.end_at.name }}" value="{{ form.end_at.value|date:'Y-m-d H:i' }}" class=" validate">
+              <input type="text" id="id_{{ form.end_at.name }}" name="{{ form.end_at.name }}" {% if form.end_at.value %}value="{{ form.end_at.value|date:'Y-m-d H:i' }}"{% endif %} class=" validate">
               <label for="id_{{ form.end_at.name }}">{{ form.end_at.label }}</label>
             </div>
           </div>
