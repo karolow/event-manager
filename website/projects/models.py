@@ -11,6 +11,7 @@ from core.models import (
     Ownership,
     Status,
     Type,
+    Location,
 )
 from organizations.models import Activity
 
@@ -62,3 +63,9 @@ class Event(CloneMixin, Entry, Category, Ownership, Status):
     budget = models.IntegerField(null=True, blank=True)
     contact_person = models.CharField(max_length=255, blank=True)
     comment = models.TextField(max_length=2000, blank=True)
+
+    location = models.ForeignKey(
+        Location,
+        on_delete=models.SET_NULL,
+        null=True,
+    )
