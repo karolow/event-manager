@@ -27,6 +27,12 @@ class Project(Entry, ContactDetails):
         on_delete=models.SET_NULL,
         null=True
     )
+    location = models.ForeignKey(
+        Location,
+        on_delete=models.SET_NULL,
+        null=True,
+    )
+    multiple_locations = models.TextField(max_length=1000, blank=True)
 
     def get_absolute_url(self):
         return reverse('event_table', args=[str(self.id)])

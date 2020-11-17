@@ -1,4 +1,5 @@
 {% extends '_base.html' %}
+{% load static %}
 {% load materializecss %}
 
 {% block title %}Project{% endblock title %}
@@ -13,7 +14,24 @@
       {{ form.title|materializecss }}
       {{ form.activity|materializecss }}
       {{ form.description|materializecss:'icon=text_fields' }}
-
+      <div class="row">
+        <div class="col s12 m6">
+          <div class="row">
+            <div class="input-field col s12">
+              <i class="material-icons prefix">add_location</i>
+              <input type="text" id="{{ form.location.name }}" placeholder="" class="autocomplete">
+              <label for="autocomplete-input">{{ form.location.label }}</label>
+            </div>
+            <div class="col s12 add-location-row">
+              <a class="waves-effect waves-light btn btn-small modal-trigger" href="#addLocation">Add location</a>
+            </div>
+          </div>
+        </div>
+        {{ form.location }}
+        <div class="col s12 m6">
+          {{ form.multiple_locations|materializecss }}
+        </div>
+      </div>
       <div class="row">
         <div class="col s12 m6">
           {{ form.website|materializecss }}
@@ -34,4 +52,117 @@
     </form>
   </div>
 </div>
+
+
+<!-- Modal Structure -->
+<div id="addLocation" class="modal">
+    <div class="modal-content">
+        <div id="resp">"Loading..."</div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect btn-flat">"Close"</a>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;language=en&amp;key=AIzaSyA4TeFPA0f4S197RrA71QNtHMdb5Xt11HE"></script>
+<script type="text/javascript" src="{% static 'mapwidgets/js/jquery_class.js' %}"></script>
+<script type="text/javascript" src="{% static 'mapwidgets/js/django_mw_base.js' %}"></script>
+<script type="text/javascript" src="{% static 'mapwidgets/js/mw_google_point_field.js' %}"></script>
+
+<script>
+    jQuery(document).ready(function(){
+
+        $('.modal').modal({
+            onCloseEnd: function () {
+                $('#resp').html('Loading...')
+                loadLocation();
+            }
+        });
+
+        var mapWidget;
+        var location = $('#location');
+        var locationSelect = $('#id_location');
+        var updateLocations = function (){
+            $.ajax(window.location.href, {
+                dataType: 'html',
+                success: function (resp){
+                    locationSelect.replaceWith($(resp).find('#id_location'))
+                    locationSelect = $('#id_location')
+                    var option = $('#id_location option:last');
+                    locationSelect.val(option.val())
+                    initLocationSelect()
+                    location.val(option.text())
+                }
+            })
+        }
+        var loadLocation = function (){
+            $.ajax('/locations/new/', {
+                dataType: 'html',
+                success: function (resp){
+                    $("#resp").html($(resp).find('#location_form'))
+                }
+            })
+        }
+        loadLocation();
+
+        $(document).on('submit', '#locationForm', function(e){
+            e.preventDefault();
+            var locationForm = $('#locationForm');
+            $.ajax({
+                method: "POST",
+                url: locationForm.attr('action'),
+                data: locationForm.serialize(),
+                success: function(resp, status, xhr) {
+                    var hasError = $(resp).find('.help-block.orange-text').length
+                    if (hasError) {
+                        $("#resp").html($(resp).find('#location_form'))
+                        mapWidget = new DjangoGooglePointFieldWidget(mapWidgetOptions);
+                    } else {
+                        updateLocations();
+                        $('.modal').modal('close')
+                    }
+                }
+            })
+        })
+
+        var initLocationSelect = function () {
+            var selectData = {};
+            //location.autocomplete('destroy');
+            var options = $('#id_location option');
+            options.each(function(){
+                selectData[$(this).text()] = null;
+            })
+            location.autocomplete({
+                data: selectData,
+                onAutocomplete: function(val) {
+                    options.each(function(){
+                        if($(this).text() === val) {
+                            locationSelect.val($(this).val())
+                        }
+                    })
+                }
+            });
+        }
+
+        var findOption = function (value) {
+            var options = $('#id_location option')
+            for(var i=0;i<options.length;i++) {
+                if($(options[i]).val() === value) {
+                    return $(options[i])
+                }
+            }
+            return false;
+        }
+
+        initLocationSelect()
+        if(locationSelect.val() !== '' && location.val() === '') {
+            var option = findOption(locationSelect.val());
+            if(option) {
+                location.val(option.text())
+            }
+        }
+
+    });
+</script>
+
 {% endblock content %}
