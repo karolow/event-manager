@@ -28,23 +28,27 @@ from .forms import (
     EventForm,
     LocationForm,
 )
-from .tables import EventTable
-from .filters import EventFilter
+from .tables import EventTable, ProjectTable
+from .filters import EventFilter, ProjectFilter
 
 
-# to do – change ListView to TableView
 class ProjectTableView(LoginRequiredMixin,
-                       ListView):
+                       ExportMixin,
+                       SingleTableMixin,
+                       FilterView):
     model = Project
-    context_object_name = 'project_list'
+    table_class = ProjectTable
+    filterset_class = ProjectFilter
     template_name = 'project_table.html'
+    paginate_by = 2
+    dataset_kwargs = {'title': 'Projects'}
+    export_formats = ['csv', 'ods', 'xlsx']
+
+    # exclude columns from table export:
+    exclude_columns = ('activity')
 
     def get_queryset(self):
-        projects = Project.objects.filter(
-            supervisor=self.request.user) \
-            .annotate(events_count=Count('event')) \
-            .order_by('-events_count')
-        return projects
+        return Project.objects.filter(supervisor=self.request.user)
 
 
 class ProjectCreateView(LoginRequiredMixin,

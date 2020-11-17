@@ -1,11 +1,33 @@
 {% extends '_base.html' %}
+{% load i18n %}
+{% load materializecss %}
+{% load django_tables2 %}
 
-{% block title %}Projects{% endblock title %}
+{% block title %}{% trans "Projects" %}{% endblock title %}
 
 {% block content %}
-  {% for project in project_list %}
-    <div>
-      <h2><a href="{% url 'project_detail' project.pk %}">{{ project.title }}</a></h2>
+
+  {% if filter %}
+  <div class="row">
+    <div class="col s12 m4">
+      <form action="" method="get" class="form form-inline">
+        {{ filter.form|materializecss }}
+        <button class="waves-effect waves-light btn-small" type="submit" name="button"><i class="material-icons left">search</i>Search</button>
+      </form>
     </div>
-  {% endfor %}
+  </div>
+  {% endif %}
+
+  {% render_table table %}
+
+  <!-- Export Dropdown -->
+  <div class="row">
+    <a class='dropdown-trigger btn-small' href='#' data-target='data_export'><i class="material-icons left">arrow_drop_down</i>Export</a>
+    <ul id='data_export' class='dropdown-content'>
+    {% for format in view.export_formats %}
+      <li><a href="{% export_url format %}">{{ format }}</a></li>
+    {% endfor %}
+    </ul>
+  </div>
+
 {% endblock content %}

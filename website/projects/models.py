@@ -37,6 +37,9 @@ class Project(Entry, ContactDetails):
     def get_absolute_url(self):
         return reverse('event_table', args=[str(self.id)])
 
+    class Meta:
+        ordering = ['title']
+
 
 class Event(CloneMixin, Entry, Category, Ownership, Status):
     project = models.ForeignKey(

@@ -2,7 +2,7 @@ import django_tables2 as tables
 from django_tables2 import columns
 from django_tables2.utils import A
 
-from .models import Event
+from .models import Event, Project
 
 
 class EventTable(tables.Table):
@@ -34,3 +34,17 @@ class EventTable(tables.Table):
     class Meta:
         model = Event
         fields = ('title', 'project', 'start_at', 'end_at', 'status', 'actions')
+
+
+class ProjectTable(tables.Table):
+    ACTIONS = '''
+       <span><a href="{% url 'project_update' record.id %}"><i class="material-icons">edit</i></a>
+       <a href="{% url 'project_delete' record.id %}"><i class="material-icons">delete</i></a></span>
+    '''
+
+    title = columns.LinkColumn('project_detail', args=[A('pk')])
+    actions = tables.TemplateColumn(ACTIONS, verbose_name="")
+
+    class Meta:
+        model = Project
+        fields = ('title', 'actions')
