@@ -2,7 +2,7 @@
 
 <!-- User Account Dropdown -->
 <ul id="dropdown2" class="dropdown-content">
-    <li><a href="{% url 'user_update' %}">{% trans "Edit account" %}</a></li>
+    <li><a href="{% url 'account_update' %}">{% trans "Edit account" %}</a></li>
     <li><a href="{% url 'account_change_password' %}">{% trans "Change password" %}</a></li>
     <li class="divider"></li>
     <li><a href="{% url 'account_logout' %}">{% trans "Log out" %}</a></li>
@@ -65,7 +65,7 @@
 
     {% if user.is_authenticated %}
 
-        <li><a href="{% url 'user_update' %}">{% trans "Edit account" %}</a></li>
+        <li><a href="{% url 'account_update' %}">{% trans "Edit account" %}</a></li>
         <li><a href="{% url 'account_change_password' %}">{% trans "Change password" %}<i class="material-icons">lock</i></a></li>
         <li class="divider"></li>
         <li><a href="{% url 'account_logout' %}">{% trans "Log out" %}</a></li>
