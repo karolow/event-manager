@@ -25,8 +25,6 @@ class EventForm(forms.ModelForm):
         attrs={'class': 'char_count', 'data-length': '100'}))
     description = forms.CharField(widget=forms.Textarea(
         attrs={'data-length': '5000'}))
-    comment = forms.CharField(widget=forms.Textarea(
-        attrs={'data-length': '2000'}))
 
     class Meta:
         model = Event
