@@ -202,4 +202,5 @@ class LocationCreateView(LoginRequiredMixin,
                          CreateView):
     model = Location
     form_class = LocationForm
+    success_url = reverse_lazy('event_table')
     template_name = 'location_modal.html'
