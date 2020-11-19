@@ -31,6 +31,7 @@ class Project(Entry, ContactDetails):
         Location,
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,
     )
     multiple_locations = models.TextField(max_length=1000, blank=True)
 
