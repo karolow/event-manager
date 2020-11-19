@@ -18,6 +18,9 @@ class ProjectForm(forms.ModelForm):
         exclude = (
             'supervisor',
         )
+        help_texts = {
+            'multiple_locations': _('Use for multiple locations, e.g. Katowice, Bytom'),
+        }
 
 
 class EventForm(forms.ModelForm):

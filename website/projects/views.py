@@ -40,7 +40,7 @@ class ProjectTableView(LoginRequiredMixin,
     table_class = ProjectTable
     filterset_class = ProjectFilter
     template_name = 'project_table.html'
-    paginate_by = 2
+    paginate_by = 5
     dataset_kwargs = {'title': 'Projects'}
     export_formats = ['csv', 'ods', 'xlsx']
 

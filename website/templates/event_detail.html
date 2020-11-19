@@ -1,12 +1,55 @@
 {% extends '_base.html' %}
-{% load materializecss %}
+{% load i18n %}
 
 {% block title %}{{ event.title }}{% endblock title %}
 
 {% block content %}
 <div>
-  <h2>{{ event.title }}</h2>
-  <p>{{ event.audiences }}</p>
-  <p>{{ event.get_status_display }}</p>
+  <div class="row"><h1>{{ event.title }}</h1></div>
+
+  <div class="row">
+    <div class="col s12 m6">
+      {{ event.project }}
+    </div>
+    <div class="col s12 m6">
+      {{ event.type }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s12 m6">
+      {{ event.audiences }}
+    </div>
+    <div class="col s12 m6">
+      {{ event.get_status_display }}
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="row">
+      <div class="col s12 m6">
+        {{ event.description }}
+      </div>
+      <div class="col s12 m6">
+        <div class="col s12 m6">
+          {{ event.start_at }}
+        </div>
+        <div class="row">
+          <div class="col s12">
+            {{ event.end_at }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s12">
+            {{ event.fields }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s12">
+            {{ event.particip_num_predict }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock content %}

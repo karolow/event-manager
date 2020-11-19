@@ -24,15 +24,24 @@
     {% block content %}
     {% endblock content %}
     </div>
-    {% if '/events/' in request.path and '/new/' not in request.path %}
-      <div class="fixed-action-btn">
-        <a href="{% url 'event_create' %}" class="btn-floating btn-large waves-effect waves-light indigo accent-2"><i class="material-icons">add</i></a>
-      </div>
-    {% elif '/projects/' in request.path and '/new/' not in request.path %}
-      <div class="fixed-action-btn">
-        <a href="{% url 'project_create' %}" class="btn-floating btn-large waves-effect waves-light indigo accent-2"><i class="material-icons">add</i></a>
-      </div>
-    {% endif %}
+
+    {% with request.path|slice:"-10:" as path %}
+      {% if '/events/' in request.path and '/new/' not in request.path %}
+        <div class="fixed-action-btn">
+          <a href="{% url 'event_create' %}" class="btn-floating btn-large waves-effect waves-light indigo accent-2"><i class="material-icons">add</i></a>
+        </div>
+      {% elif path == '/projects/' %}
+        <div class="fixed-action-btn">
+          <a href="{% url 'project_create' %}" class="btn-floating btn-large waves-effect waves-light indigo accent-2"><i class="material-icons">add</i></a>
+        </div>
+      {% elif '/projects/' in request.path and '/new/' not in request.path %}
+        <div class="fixed-action-btn">
+          <a href="{% url 'event_create' %}" class="btn-floating btn-large waves-effect waves-light indigo accent-2"><i class="material-icons">add</i></a>
+        </div>
+      {% endif %}
+    {% endwith %}
+
+
   </main>
 
   <!-- JavaScript -->

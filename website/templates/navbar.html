@@ -14,7 +14,7 @@
 
             <!-- Logo -->
             {% if user.is_authenticated %}
-                <a href="{% url 'event_table' %}" class="brand-logo">{{ organization_name }}</a>
+                <a href="#" class="brand-logo">{{ organization_name }}</a>
             {% else %}
                 <a href="#" class="brand-logo">{{ project_name }}</a>
             {% endif %}
@@ -24,7 +24,7 @@
 
 
             <ul class="logo-adjacent hide-on-med-and-down">
-                <li class="logo-distance"><a href="#"><i class="material-icons left">table_chart</i>All events</a></li>
+                <li class="logo-distance"><a href="{% url 'major_event_table' %}">All events</a></li>
             </ul>
 
             <!-- User Account Dropdown -->
@@ -65,7 +65,7 @@
 
     {% if user.is_authenticated %}
 
-        <li><a href="{% url 'account_update' %}">{% trans "Edit account" %}</a></li>
+        <li><a href="{% url 'account_update' %}">{% trans "Edit account" %}<i class="material-icons">account_circle</i></a></li>
         <li><a href="{% url 'account_change_password' %}">{% trans "Change password" %}<i class="material-icons">lock</i></a></li>
         <li class="divider"></li>
         <li><a href="{% url 'account_logout' %}">{% trans "Log out" %}</a></li>
