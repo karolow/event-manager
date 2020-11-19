@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'organizations.apps.OrganizationsConfig',
     'projects.apps.ProjectsConfig',
+    'api.apps.ApiConfig',
     'allauth',
     'allauth.account',
     'django_tables2',
@@ -58,6 +59,7 @@ INSTALLED_APPS = [
     'multiselectfield',
     'materializecssform',
     'mapwidgets',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
