@@ -4,6 +4,11 @@ from projects.models import Project
 from .serializers import ProjectSerializer
 
 
-class ProjectAPIView(generics.ListAPIView):
+class ProjectListAPIView(generics.ListAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+
+
+class ProjectRetrieveAPIView(generics.RetrieveAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
