@@ -1,0 +1,14 @@
+{% extends '_base.html' %}
+{% load i18n %}
+{% load materializecss %}
+
+{% block title %}{% trans "Your API token" %}{% endblock title %}
+
+{% block content %}
+<div class="row">
+  <div class="col l4 m6 s12 offset-l4 offset-m3">
+    <h1>{% trans "Your API token" %}</h1>
+        <p>{{ token }}</p>
+  </div>
+</div>
+{% endblock content %}
