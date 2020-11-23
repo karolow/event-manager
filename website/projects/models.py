@@ -36,15 +36,25 @@ class Project(Entry, ContactDetails):
     multiple_locations = models.TextField(max_length=1000, blank=True)
 
     def get_absolute_url(self):
-        return reverse('event_table', args=[str(self.id)])
+        return reverse('project_detail', args=[str(self.id)])
 
     class Meta:
         ordering = ['title']
+
+    @property
+    def place(self):
+        if self.location:
+            return self.location.name
+        elif self.multiple_locations:
+            return self.multiple_locations
+        else:
+            return ''
 
 
 class Event(CloneMixin, Entry, Category, Ownership, Status):
     project = models.ForeignKey(
         Project,
+        related_name='events',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -79,3 +89,6 @@ class Event(CloneMixin, Entry, Category, Ownership, Status):
         on_delete=models.SET_NULL,
         null=True,
     )
+
+    def get_absolute_url(self):
+        return reverse('event_detail', args=[str(self.id)])

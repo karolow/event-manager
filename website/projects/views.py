@@ -81,7 +81,7 @@ class ProjectDetailView(LoginRequiredMixin,
 
     def get_queryset(self):
         user = self.request.user
-        return self.object.event_set.all().filter(supervisor=user)
+        return self.object.events.filter(supervisor=user)
 
 
 class ProjectUpdateView(LoginRequiredMixin,

@@ -1,11 +1,15 @@
-from django.urls import path
+from rest_framework.routers import SimpleRouter
+
 from .views import (
-    ProjectListAPIView,
-    ProjectRetrieveAPIView,
+    EventViewSet,
+    ProjectViewSet,
+    # UserViewSet,
 )
 
 
-urlpatterns = [
-    path('projects/', ProjectListAPIView.as_view()),
-    path('projects/<uuid:pk>', ProjectRetrieveAPIView.as_view()),
-]
+router = SimpleRouter()
+router.register('events', EventViewSet, basename='events')
+router.register('projects', ProjectViewSet, basename='projects')
+# router.register('users', UserViewSet, basename='users')
+
+urlpatterns = router.urls
