@@ -16,7 +16,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
-from rest_framework.authtoken import views
 
 
 urlpatterns = [
@@ -27,6 +26,6 @@ urlpatterns = [
     path('all/', include('organizations.urls')),
     path('', include('projects.urls')),
     path('api/v1/', include('api.urls')),
-    path('api-auth/', include('rest_framework.urls')),
-    path('api/v1/dj-rest-auth/', include('dj_rest_auth.urls')),
+    # path('api-auth/', include('rest_framework.urls')),
+    # path('api/v1/dj-rest-auth/', include('dj_rest_auth.urls')),
 ]
