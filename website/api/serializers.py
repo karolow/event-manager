@@ -1,20 +1,5 @@
-from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from projects.models import Event, Project
-
-from rest_framework.reverse import reverse
-
-
-#
-# class UserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = get_user_model()
-#         fields = (
-#             'id',
-#             'full_name',
-#             'email',
-#             'phone',
-#         )
 
 
 class ProjectSerializer(serializers.ModelSerializer):
@@ -40,7 +25,6 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 
 class NestedProjectSerializer(serializers.HyperlinkedModelSerializer):
-
     url = serializers.HyperlinkedIdentityField(
         view_name='projects-detail',
     )
