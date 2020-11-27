@@ -1,6 +1,5 @@
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
-from django.db.models import Count
 
 from django.views.generic import (
     ListView,
@@ -71,7 +70,8 @@ class ProjectDetailView(LoginRequiredMixin,
     template_name = 'project_detail.html'
 
     def get(self, request, *args, **kwargs):
-        self.object = self.get_object(queryset=Project.objects.all())
+        self.object = self.get_object(
+            queryset=Project.objects.all().filter(supervisor=self.request.user))
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -157,10 +157,15 @@ class EventCreateView(LoginRequiredMixin,
 
 
 class EventDetailView(LoginRequiredMixin,
+                      UserPassesTestMixin,
                       DetailView):
     model = Event
     context_object_name = 'event'
     template_name = 'event_detail.html'
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.supervisor.organization == self.request.user.organization
 
 
 class EventUpdateView(LoginRequiredMixin,
