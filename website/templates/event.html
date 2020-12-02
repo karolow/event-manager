@@ -1,12 +1,15 @@
 {% extends '_base.html' %}
+{% load i18n %}
 {% load static %}
 {% load materializecss %}
 
-{% block title %}Event{% endblock title %}
+{% block title %}{% trans "Events" %}{% endblock title %}
+
 {% block content %}
+
 <div class="row">
   <div class="col l8 s12 offset-l2">
-    <h2>Event</h2>
+    <h1>Event</h1>
     <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
       {{ form.media }}

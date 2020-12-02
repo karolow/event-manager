@@ -1,17 +1,32 @@
 {% extends '_base.html' %}
+{% load i18n %}
 {% load materializecss %}
 {% load django_tables2 %}
 
-{% block title %}Events{% endblock title %}
+{% block title %}{% trans "Events" %}{% endblock title %}
 
 {% block content %}
 
 {% if filter %}
 <div class="row">
-  <div class="col s12 m4">
-    <form action="" method="get" class="form form-inline">
-      {{ filter.form|materializecss }}
-      <button class="waves-effect waves-light btn-small" type="submit" name="button"><i class="material-icons left">search</i>Search</button>
+  <div class="col s12 no-padding">
+    <h1>{% trans "Events" %}</h1>
+    <form action="" method="get" class="form">
+      <div class="row">
+        <div class="col s12 m3">
+          {{ filter.form.title|materializecss }}
+        </div>
+        <div class="col s12 m3">
+          {{ filter.form.project|materializecss }}
+        </div>
+        <div class="col s12 m3">
+          {{ filter.form.type|materializecss }}
+        </div>
+        <div class="col s12 m3">
+          {{ filter.form.status|materializecss }}
+        </div>
+      </div>
+      <button class="table waves-effect waves-light btn-small grey-30" type="submit" name="button"><i class="material-icons left">search</i>Search</button>
     </form>
   </div>
 </div>
@@ -20,14 +35,48 @@
 {% render_table table %}
 
 <!-- Export Dropdown -->
-<div class="row">
-  <a class='dropdown-trigger btn-small' href='#' data-target='data_export'><i class="material-icons left">arrow_drop_down</i>Export</a>
-
+<div class="row table-button">
+  <a class='dropdown-trigger waves-effect waves-light btn-small grey-30' href='#' data-target='data_export'><i class="material-icons left">arrow_drop_down</i>Export</a>
   <ul id='data_export' class='dropdown-content'>
   {% for format in view.export_formats %}
     <li><a href="{% export_url format %}">{{ format }}</a></li>
   {% endfor %}
   </ul>
 </div>
+
+<script>
+    jQuery(document).ready(function(){
+
+        // Initialize materialize data picker
+        var dummyTime = null;
+        var currentDateElem = null;
+        var dateObj = new Date();
+
+        jQuery('#id_start_at,#id_end_at').datepicker({
+            format: 'yyyy-mm-dd',
+            onClose: function () {
+                currentDateElem = this.el;
+                if(currentDateElem.value !== '') {
+                    $('body').append('<input type="hidden" id="dummyTime">')
+                    dummyTime = $("#dummyTime");
+                    dummyTime.timepicker({
+                        twelveHour: false,
+                        onCloseEnd: function () {
+                            var time = dummyTime.val();
+                            if (time === '') {
+                                time = dateObj.getHours() + ':' + (dateObj.getMinutes() < 10 ? '0' + dateObj.getMinutes() : dateObj.getMinutes() );
+                            }
+                            currentDateElem.value = currentDateElem.value.replace(/\s\d{2}:\d{2}/, '') + ' ' + time;
+                            currentDateElem = null;
+                            dummyTime.remove()
+                        }
+                    });
+                    dummyTime.trigger('click');
+                }
+            }
+        });
+    });
+
+</script>
 
 {% endblock content %}

@@ -5,46 +5,52 @@
 
 {% block content %}
 
-<div>
-  <div class="row"><h1>{{ project.title }}</h1></div>
-  <div class="section">
-    <div class="row">
-      <div class="col s12 m6">
-        {{ project.activity }}
-      </div>
-    </div>
-  </div>
+<div id="detail-view" class="row">
+  <div class="col s12 no-padding">
+    <h1>{{ project.title }}
+      {% if project.website %}
+      <a href="{{ project.website }}" target="_blank"><i class="material-icons icon-blue small">call_made</i></a>
+      {% endif %}
+    </h1>
 
-  <div class="divider"></div>
-
-  <div class="section">
     <div class="row">
-      <div class="col s12 m6">
-        {{ project.description }}
-      </div>
-      <div class="col s12 m6">
-        <div class="col s12 m6">
-          {% if project.location %}
-            {{ project.location }}
-          {% else %}
-            {{ project.multiple_locations }}
-          {% endif %}
+
+      <!-- Left block -->
+      <div class="col-block col s12 m6">
+
+        <div class="row display display-header">
+          {% trans "activity" %}: <b>{{ project.activity }}</b>
         </div>
-        <div class="row">
-          <div class="col s12">
+        <div class="row display no-bottom-border">
+          {{ project.description }}
+        </div>
+
+      </div>
+
+      <!-- Right block -->
+      <div class="col-block col s12 m4">
+          <div class="row display display-header">
             {{ project.website }}
           </div>
-        </div>
-        <div class="row">
-          <div class="col s12">
+
+        {% if project.email %}
+          <div class="row display">
             {{ project.email }}
           </div>
-        </div>
-          <div class="row">
-            <div class="col s12">
-              {{ project.phone }}
-            </div>
+        {% endif %}
+
+        {% if project.phone %}
+          <div class="row display">
+            {{ project.phone }}
           </div>
+        {% endif %}
+
+        {% if project.contact_person %}
+          <div class="row display">
+            {{ project.contact_person }}
+          </div>
+        {% endif %}
+
       </div>
     </div>
   </div>
@@ -54,16 +60,28 @@
 <table>
   <thead>
     <tr>
-      <th>Event</th>
-      <th>Status</th>
+      <th>{% trans "Title" %}</th>
+      <th>{% trans "Type" %}</th>
+      <th>{% trans "Start" %}</th>
+      <th>{% trans "End" %}</th>
+      <th>{% trans "Status" %}</th>
     </tr>
   </thead>
 	<tbody>
 		{% for event in page_obj %}
 		<tr>
 			<td class="title">
-				<a href="{% url 'event_detail' event.pk %}">{{ event.title }}</a>
+				<b><a href="{% url 'event_detail' event.pk %}">{{ event.title }}</a></b>
 			</td>
+      <td>
+				{{ event.type }}
+			</td>
+      <td>
+        {{ event.start_at }}
+      </td>
+      <td>
+        {{ event.end_at }}
+      </td>
 			<td class="status">
 				{{ event.get_status_display }}
 			</td>

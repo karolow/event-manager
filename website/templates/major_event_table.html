@@ -1,17 +1,32 @@
 {% extends '_base.html' %}
+{% load i18n %}
 {% load materializecss %}
 {% load django_tables2 %}
 
-{% block title %}Events{% endblock title %}
+{% block title %}{% trans "Events" %}{% endblock title %}
 
 {% block content %}
 
 {% if filter %}
 <div class="row">
-  <div class="col s12 m4">
+  <div class="col s12 no-padding">
+    <h1>{% trans "All Events" %}</h1>
     <form action="" method="get" class="form form-inline">
-      {{ filter.form|materializecss }}
-      <button class="waves-effect waves-light btn-small" type="submit" name="button"><i class="material-icons left">search</i>Search</button>
+        <div class="row">
+          <div class="col s12 m3">
+            {{ filter.form.title|materializecss }}
+          </div>
+          <div class="col s12 m3">
+            {{ filter.form.project|materializecss }}
+          </div>
+          <div class="col s12 m3">
+            {{ filter.form.type|materializecss }}
+          </div>
+          <div class="col s12 m3">
+            {{ filter.form.status|materializecss }}
+          </div>
+        </div>
+      <button class="table waves-effect waves-light btn-small grey-30" type="submit" name="button"><i class="material-icons left">search</i>Search</button>
     </form>
   </div>
 </div>
@@ -20,8 +35,8 @@
 {% render_table table %}
 
 <!-- Export Dropdown -->
-<div class="row">
-  <a class='dropdown-trigger btn-small' href='#' data-target='data_export'><i class="material-icons left">arrow_drop_down</i>Export</a>
+<div class="row table-button">
+  <a class='dropdown-trigger btn-small grey-30' href='#' data-target='data_export'><i class="material-icons left">arrow_drop_down</i>Export</a>
 
   <ul id='data_export' class='dropdown-content'>
   {% for format in view.export_formats %}

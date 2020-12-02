@@ -1,14 +1,23 @@
 {% extends '_base.html' %}
+{% load i18n %}
 {% load materializecss %}
 
-{% block title %}Event{% endblock title %}
+{% block title %}{% trans "Events" %}{% endblock title %}
 
 {% block content %}
-<h2>Delete event</h2>
-  <form action="" method="post">
-  {% csrf_token %}
-  <p>Are you sure you want to delete "{{ event.title }}"?</p>
-  <input type="submit" value="Confirm">
-  <a class="btn waves-effect waves-light" href="{% url 'event_table' %}">Cancel</a>
-</form>
+
+<div class="row">
+  <div class="col s12 no-padding">
+    <h1>Delete event</h1>
+    <form action="" method="post">
+      {% csrf_token %}
+      <p class="large-text">Are you sure you want to delete {{ event.title }}?</p>
+      <div class="detached-button">
+        <button class="btn waves-effect waves-light red darken-3" type="submit">Delete<i class="material-icons right">delete</i></button>
+        <a class="btn waves-effect waves-light" href="{% url 'event_table' %}">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+
 {% endblock content %}

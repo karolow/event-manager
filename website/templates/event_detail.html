@@ -4,52 +4,95 @@
 {% block title %}{{ event.title }}{% endblock title %}
 
 {% block content %}
-<div>
-  <div class="row"><h1>{{ event.title }}</h1></div>
+<div id="detail-view" class="row">
+  <div class="col s12 no-padding">
+    <h1>{{ event.title }}
+      {% if event.link %}
+      <a href="{{ event.link }}" target="_blank"><i class="material-icons icon-blue small">call_made</i></a>
+      {% endif %}
+    </h1>
 
-  <div class="row">
-    <div class="col s12 m6">
-      {{ event.project }}
-    </div>
-    <div class="col s12 m6">
-      {{ event.type }}
-    </div>
-  </div>
-  <div class="row">
-    <div class="col s12 m6">
-      {{ event.audiences }}
-    </div>
-    <div class="col s12 m6">
-      {{ event.get_status_display }}
-    </div>
-  </div>
-
-  <div class="section">
     <div class="row">
-      <div class="col s12 m6">
-        {{ event.description }}
+
+      <!-- Left block -->
+      <div class="col-block col s12 m6">
+
+        <div class="row display display-header">
+          <div class="col s12 m6">
+            <div class="row"><b>{{ event.project }}</b></div>
+          </div>
+          <div class="col s12 m6">
+            <div class="row"><b>{{ event.type|lower }}</b> {{ event.get_status_display|lower }}</div>
+          </div>
+        </div>
+
+        <div class="row display">
+          <div class="col s12 m6">
+            <div class="row">{{ event.start_at }}</div>
+            <div class="row">{{ event.end_at }}</div>
+          </div>
+          <div class="col s12 m6">
+            <div class="row">{{ event.location }}</div>
+            <div class="row">{{ event.room }}</div>
+          </div>
+        </div>
+
+        <div class="row display">
+          <div class="col s12 m6">
+            <div class="row">{{ event.fields }}</div>
+          </div>
+          <div class="col s12 m6">
+            <div class="row">{{ event.audiences }}</div>
+          </div>
+        </div>
+
+        <div class="row display">
+          <div class="col s12 m6">
+            <div class="row">{% trans "particip. num planned" %}: {{ event.particip_num_predict }}</div>
+            {% if event.particip_num_actual %}
+              <div class="row">{% trans "particip. num actual" %}: {{ event.particip_num_actual }}</div>
+            {% endif %}
+          </div>
+          <div class="col s12 m6">
+            <div class="row">{% trans "tickets" %}: {{ event.tickets|yesno:"yes,no" }}</div>
+            {% if event.fees %}
+              <div class="row">{% trans "fees" %}: {{ event.fees }}</div>
+            {% endif %}
+            {% if event.registr_link %}
+              <div class="row"><a href="{{ event.registr_link }}" target="_blank">{% trans "registration url" %}</a></div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="row display">
+          <div class="col s12 m6">
+            <div class="row">{{ event.get_ownership_display|lower }} {% trans "event" %}</div>
+          </div>
+          <div class="col s12 m6">
+            <div class="row">{% trans "partners" %}: {{ event.partners }}</div>
+          </div>
+        </div>
+
+        <div class="row display">
+          <div class="col s12 m6">
+            <div class="row">{% trans "online event" %}: {{ event.online|yesno:"yes,no" }}</div>
+          </div>
+          <div class="col s12 m6">
+            <div class="row">{% trans "contact person" %}: {{ event.contact_person }}</div>
+          </div>
+        </div>
+
+        <div class="row display no-bottom-border">{{ event.comment }}</div>
+
       </div>
-      <div class="col s12 m6">
-        <div class="col s12 m6">
-          {{ event.start_at }}
-        </div>
-        <div class="row">
-          <div class="col s12">
-            {{ event.end_at }}
-          </div>
-        </div>
-        <div class="row">
-          <div class="col s12">
-            {{ event.fields }}
-          </div>
-        </div>
-        <div class="row">
-          <div class="col s12">
-            {{ event.particip_num_predict }}
-          </div>
-        </div>
+
+      <!-- Right block -->
+      <div class="col-block col s12 m4">
+        <div class="row display display-header">{% trans "about" %}</div>
+        <div class="row display no-bottom-border">{{ event.description }}</div>
       </div>
     </div>
   </div>
 </div>
+
 {% endblock content %}

@@ -1,14 +1,21 @@
 {% extends '_base.html' %}
+{% load i18n %}
 {% load materializecss %}
 
-{% block title %}Delete project{% endblock title %}
+{% block title %}{% trans "Delete project" %}{% endblock title %}
 
 {% block content %}
-<h2>Delete project</h2>
-  <form action="" method="post">
-  {% csrf_token %}
-  <p>Are you sure you want to delete "{{ project.title }}"?</p>
-  <input type="submit" value="Confirm">
-  <a class="btn waves-effect waves-light" href="{% url 'project_table' %}">Cancel</a>
-</form>
+<div class="row">
+  <div class="col s12 no-padding">
+  <h1>{% trans "Delete project" %}</h1>
+    <form action="" method="post">
+      {% csrf_token %}
+      <p class="large-text">Are you sure you want to delete {{ project.title }}?</p>
+      <div class="detached-button">
+        <button class="btn waves-effect waves-light red darken-3" type="submit">Delete<i class="material-icons right">delete</i></button>
+        <a class="btn waves-effect waves-light" href="{% url 'project_table' %}">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock content %}
