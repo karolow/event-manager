@@ -105,6 +105,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+# Production settings
+ENVIRONMENT = os.environ.get('ENVIRONMENT', default='development')
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -119,8 +121,9 @@ DATABASES = {
         'PORT': os.environ['DATABASE_PORT'],
     }
 }
-# db_from_env = dj_database_url.config(conn_max_age=500)
-# DATABASES['default'].update(db_from_env)
+
+
+# DATABASES['default'] = dj_database_url.config()
 
 
 # Password validation
@@ -191,7 +194,6 @@ ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 
 ADMIN_URL = os.environ['ADMIN_URL']
-# ADMIN_URL = 'test_admin'
 
 # email configuration
 
@@ -210,9 +212,6 @@ PROJECT_NAME = 'Event Manager'
 # DateTime Picker (MaterializeCSS)
 # ISO 8601 datetime format to accept html5 datetime input values
 DATETIME_INPUT_FORMATS += ["%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M"]
-
-# Production settings
-ENVIRONMENT = os.environ.get('ENVIRONMENT', default='development')
 
 if ENVIRONMENT == 'production':
     SECURE_BROWSER_XSS_FILTER = True
