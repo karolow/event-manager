@@ -1,7 +1,7 @@
 import django_filters
 
 from .models import Event, Project
-# from core.models import Type
+from core.models import Type
 
 import operator
 from django.db.models import Q
@@ -11,7 +11,7 @@ from functools import reduce
 class EventFilter(django_filters.FilterSet):
     title = django_filters.CharFilter(field_name="title", method='filter_title')
     audiences = django_filters.CharFilter(field_name='audiences', method='filter_audiences')
-    # type = django_filters.ModelChoiceFilter(queryset=Type.objects.all())
+    type = django_filters.ModelChoiceFilter(queryset=Type.objects.all())
 
     class Meta:
         model = Event
@@ -19,7 +19,7 @@ class EventFilter(django_filters.FilterSet):
             'title',
             'project',
             'audiences',
-            # 'type',
+            'type',
             'status',
         )
 

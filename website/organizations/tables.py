@@ -6,8 +6,9 @@ from projects.models import Event
 
 
 class MajorEventTable(tables.Table):
-    title = columns.LinkColumn('event_detail', args=[A('pk')])
-    project = columns.Column(visible=False)
+    title = columns.LinkColumn('event_detail', args=[A('pk')], attrs={
+                               "td": {"class": "bold no-color"}})
+    project = columns.Column(visible=True)
     type = columns.Column(visible=False)
     end_at = columns.DateColumn(format='d-M-y', visible=False)
     # timetable = columns.Column(visible=False)
@@ -27,4 +28,4 @@ class MajorEventTable(tables.Table):
 
     class Meta:
         model = Event
-        fields = ('title', 'supervisor', 'start_at', 'status')
+        fields = ('title', 'project', 'start_at', 'status')
