@@ -2373,7 +2373,7 @@ input,
 optgroup,
 select,
 textarea {
-  font-family: 'Noto Sans', sans-serif;
+  font-family: 'Roboto', sans-serif;
   /* 1 */
   font-size: 100%;
   /* 1 */
@@ -2593,7 +2593,7 @@ input,
 optgroup,
 select,
 textarea {
-  font-family: 'Noto Sans', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 ul:not(.browser-default) {
@@ -4490,7 +4490,7 @@ a {
 
 html {
   line-height: 1.5;
-  font-family: 'Noto Sans', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   color: rgba(0, 0, 0, 0.87);
 }

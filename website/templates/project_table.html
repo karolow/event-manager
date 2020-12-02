@@ -9,10 +9,11 @@
 
   {% if filter %}
   <div class="row">
-    <div class="col s12 m4">
+    <div class="col s12 no-padding">
+      <h1>{% trans "Projects" %}</h1>
       <form action="" method="get" class="form form-inline">
         {{ filter.form|materializecss }}
-        <button class="waves-effect waves-light btn-small" type="submit" name="button"><i class="material-icons left">search</i>Search</button>
+        <button class="table waves-effect waves-light btn-small grey-30" type="submit" name="button"><i class="material-icons left">search</i>Search</button>
       </form>
     </div>
   </div>
@@ -21,8 +22,8 @@
   {% render_table table %}
 
   <!-- Export Dropdown -->
-  <div class="row">
-    <a class='dropdown-trigger btn-small' href='#' data-target='data_export'><i class="material-icons left">arrow_drop_down</i>Export</a>
+  <div class="row table-button">
+    <a class='dropdown-trigger btn-small grey-30' href='#' data-target='data_export'><i class="material-icons left">arrow_drop_down</i>Export</a>
     <ul id='data_export' class='dropdown-content'>
     {% for format in view.export_formats %}
       <li><a href="{% export_url format %}">{{ format }}</a></li>

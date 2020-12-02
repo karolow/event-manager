@@ -7,12 +7,15 @@ from .models import Event, Project
 
 class EventTable(tables.Table):
     ACTIONS = '''
-       <span><a href="{% url 'event_update' record.id %}"><i class="material-icons">edit</i></a>
-       <span><a href="{% url 'event_duplicate' record.id %}"><i class="material-icons">content_copy</i></a>
-       <a href="{% url 'event_delete' record.id %}"><i class="material-icons">delete</i></a></span>
+       <span>
+           <a href="{% url 'event_update' record.id %}"><i class="table-icon material-icons icon-blue">edit</i></a>
+           <a href="{% url 'event_duplicate' record.id %}"><i class="table-icon material-icons icon-blue">content_copy</i></a>
+           <a href="{% url 'event_delete' record.id %}"><i class="table-icon material-icons icon-red">delete</i></a>
+       </span>
     '''
 
-    title = columns.LinkColumn('event_detail', args=[A('pk')])
+    title = columns.LinkColumn('event_detail', args=[A('pk')], attrs={
+                               "td": {"class": "bold no-color"}})
     project = columns.Column()
     type = columns.Column(visible=False)
     # timetable = columns.Column(visible=False)
@@ -38,13 +41,14 @@ class EventTable(tables.Table):
 
 class ProjectTable(tables.Table):
     ACTIONS = '''
-       <span><a href="{% url 'project_update' record.id %}"><i class="material-icons">edit</i></a>
-       <a href="{% url 'project_delete' record.id %}"><i class="material-icons">delete</i></a></span>
+       <span><a href="{% url 'project_update' record.id %}"><i class="table-icon material-icons icon-blue">edit</i></a>
+       <a href="{% url 'project_delete' record.id %}"><i class="table-icon material-icons icon-red">delete</i></a></span>
     '''
 
-    title = columns.LinkColumn('project_detail', args=[A('pk')])
+    title = columns.LinkColumn('project_detail', args=[A('pk')], attrs={
+                               "td": {"class": "bold no-color"}})
     actions = tables.TemplateColumn(ACTIONS, verbose_name="")
 
     class Meta:
         model = Project
-        fields = ('title', 'actions')
+        fields = ('title', 'activity', 'actions')

@@ -1,14 +1,15 @@
 {% extends '_base.html' %}
+{% load i18n %}
 {% load static %}
 {% load materializecss %}
 
-{% block title %}Project{% endblock title %}
+{% block title %}{% trans "Project" %}{% endblock title %}
 
 {% block content %}
 
 <div class="row">
   <div class="col l8 s12 offset-l2">
-    <h2>Project</h2>
+    <h1>Project</h1>
     <form method="post">
       {% csrf_token %}
       {{ form.title|materializecss }}

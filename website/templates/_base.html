@@ -1,11 +1,12 @@
 {% load static %}
+{% load i18n %}
 
 <html>
 <head>
   <meta charset="utf-8">
-  <title>{% block title %}Bookstore{% endblock %}</title>
+  <title>{% block title %}{% trans "Event Manager" %}{% endblock %}</title>
     <!-- CSS -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.css' %}"  media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="{% static 'css/custom.css' %}"  media="screen,projection"/>
@@ -28,15 +29,15 @@
     {% with request.path|slice:"-10:" as path %}
       {% if '/events/' in request.path and '/new/' not in request.path %}
         <div class="fixed-action-btn">
-          <a href="{% url 'event_create' %}" class="btn-floating btn-large waves-effect waves-light indigo accent-2"><i class="material-icons">add</i></a>
+          <a href="{% url 'event_create' %}" class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">add</i></a>
         </div>
       {% elif path == '/projects/' %}
         <div class="fixed-action-btn">
-          <a href="{% url 'project_create' %}" class="btn-floating btn-large waves-effect waves-light indigo accent-2"><i class="material-icons">add</i></a>
+          <a href="{% url 'project_create' %}" class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">add</i></a>
         </div>
       {% elif '/projects/' in request.path and '/new/' not in request.path %}
         <div class="fixed-action-btn">
-          <a href="{% url 'event_create' %}" class="btn-floating btn-large waves-effect waves-light indigo accent-2"><i class="material-icons">add</i></a>
+          <a href="{% url 'event_create' %}" class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">add</i></a>
         </div>
       {% endif %}
     {% endwith %}
@@ -64,7 +65,8 @@
             constrainWidth: false,
             hover: false,
             belowOrigin: true,
-            alignment: 'left'
+            alignment: 'left',
+            coverTrigger: false
           });
           // side navigation (smaller screens)
           $('.sidenav').sidenav();
