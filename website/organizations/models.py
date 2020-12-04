@@ -3,7 +3,7 @@ from core.models import PersistentItem, Entry, ContactDetails
 
 
 class Organization(Entry, ContactDetails):
-    pass
+    email_domain = models.CharField(max_length=255, blank=True)
 
 
 class Activity(PersistentItem):
