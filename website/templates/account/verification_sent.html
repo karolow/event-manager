@@ -8,7 +8,12 @@
 <div class="row">
   <div class="col l4 m6 s12 offset-l4 offset-m3">
     <h1>{% trans "Email verification" %}</h1>
-      <p class="large-text">{% blocktrans %}We have sent an email to you for verification. Follow the link provided to finalize the signup process. Please contact us at {{ contact_email }} if you do not receive it within a few minutes.{% endblocktrans %}</p>
+      <p class="large-text">
+          {% trans "We have sent an email to you for verification. Follow the provided link to finalize the signup process." %}
+      </p>
+      <p class="large-text">
+          {% blocktrans %}Please contact us at {{ contact_email }} if you do not receive it within a few minutes.{% endblocktrans %}
+      </p>
   </div>
 </div>
 {% endblock %}
