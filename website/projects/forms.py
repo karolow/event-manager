@@ -5,6 +5,7 @@ from mapwidgets.widgets import GooglePointFieldWidget
 
 from .models import Project, Event
 from core.models import Location
+from organizations.models import Activity
 
 
 class ProjectForm(forms.ModelForm):
@@ -21,6 +22,12 @@ class ProjectForm(forms.ModelForm):
         help_texts = {
             'multiple_locations': _('Use for multiple locations, e.g. Katowice, Bytom'),
         }
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('project_user')
+        super(ProjectForm, self).__init__(*args, **kwargs)
+        self.fields['activity'].queryset = Activity.objects.filter(
+            organization=user.organization)
 
 
 class EventForm(forms.ModelForm):

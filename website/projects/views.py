@@ -19,6 +19,7 @@ from django_tables2.export.views import ExportMixin
 from .models import (
     Project,
     Event,
+    Activity,
 )
 from core.models import Location
 
@@ -61,6 +62,11 @@ class ProjectCreateView(LoginRequiredMixin,
         project.supervisor = self.request.user
         project.save()
         return super().form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super(ProjectCreateView, self).get_form_kwargs()
+        kwargs.update({'project_user': self.request.user})
+        return kwargs
 
 
 class ProjectDetailView(LoginRequiredMixin,

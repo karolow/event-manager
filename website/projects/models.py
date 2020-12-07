@@ -20,7 +20,8 @@ class Project(Entry, ContactDetails):
     activity = models.ForeignKey(
         Activity,
         on_delete=models.SET_NULL,
-        null=True
+        null=True,
+        blank=True,
     )
     supervisor = models.ForeignKey(
         settings.AUTH_USER_MODEL,
