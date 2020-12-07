@@ -1,6 +1,7 @@
 from .models import *
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.models import Group
 
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
@@ -30,23 +31,21 @@ class CustomUserChangeForm(UserChangeForm):
 
 class ExtendedSignupForm(SignupForm):
     organization_queryset = Organization.objects.all()
-    organization = forms.ModelChoiceField(
-        queryset=organization_queryset,
-        empty_label=_('Select your organization')
-    )
-
-    def clean_email(self):
-        email = self.cleaned_data['email']
-        return email
+    organization = forms.ModelChoiceField(queryset=organization_queryset)
 
     def clean(self):
         """
         Check signup email domain against organization's
         allowed domain list
         """
-        cleaned_data = super(ExtendedSignupForm, self).clean()
-        organization = cleaned_data.get("organization")
-        email = cleaned_data.get("email")
+        super().clean()
+        organization = self.cleaned_data.get("organization")
+        if organization is None:
+            raise forms.ValidationError(
+                _('You need to select the organization')
+            )
+
+        email = self.cleaned_data.get("email")
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError(
                 _('Account with this email already exists')
@@ -58,7 +57,7 @@ class ExtendedSignupForm(SignupForm):
                 title=organization).email_domain
             if domains == '':
                 raise forms.ValidationError(
-                    _('Sorry, it seems that at the moment this organization does not accept new users')
+                    _('It seems that at the moment this organization does not accept new users')
                 )
             else:
                 domains_list = domains.replace(' ', '').split(',')
@@ -77,6 +76,9 @@ class ExtendedSignupForm(SignupForm):
     def save(self, request):
         user = super(ExtendedSignupForm, self).save(request)
         user.organization = self.cleaned_data['organization']
+        if str(self.cleaned_data['organization']) == 'Other':
+            group = Group.objects.get(name='Follower')
+            user.groups.add(group)
         user.save()
         return user
 
