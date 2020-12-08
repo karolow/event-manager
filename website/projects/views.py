@@ -10,7 +10,12 @@ from django.views.generic import (
 )
 from django.views.generic.detail import SingleObjectMixin
 
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import (
+    LoginRequiredMixin,
+    UserPassesTestMixin,
+    PermissionRequiredMixin,
+)
+from django.contrib.auth.decorators import login_required, permission_required
 
 from django_filters.views import FilterView
 from django_tables2.views import SingleTableMixin
@@ -33,10 +38,12 @@ from .filters import EventFilter, ProjectFilter
 
 
 class ProjectTableView(LoginRequiredMixin,
+                       PermissionRequiredMixin,
                        ExportMixin,
                        SingleTableMixin,
                        FilterView):
     model = Project
+    permission_required = 'projects.view_project'
     table_class = ProjectTable
     filterset_class = ProjectFilter
     template_name = 'project_table.html'
@@ -52,8 +59,10 @@ class ProjectTableView(LoginRequiredMixin,
 
 
 class ProjectCreateView(LoginRequiredMixin,
+                        PermissionRequiredMixin,
                         CreateView):
     form_class = ProjectForm
+    permission_required = 'projects.add_project'
     success_url = reverse_lazy('project_table')
     template_name = 'project.html'
 
@@ -70,8 +79,10 @@ class ProjectCreateView(LoginRequiredMixin,
 
 
 class ProjectDetailView(LoginRequiredMixin,
+                        PermissionRequiredMixin,
                         SingleObjectMixin,
                         ListView):
+    permission_required = 'projects.view_project'
     paginate_by = 5
     template_name = 'project_detail.html'
 
@@ -91,9 +102,11 @@ class ProjectDetailView(LoginRequiredMixin,
 
 
 class ProjectUpdateView(LoginRequiredMixin,
+                        PermissionRequiredMixin,
                         UserPassesTestMixin,
                         UpdateView):
     model = Project
+    permission_required = 'projects.change_project'
     form_class = ProjectForm
     success_url = reverse_lazy('project_table')
     template_name = 'project.html'
@@ -103,6 +116,8 @@ class ProjectUpdateView(LoginRequiredMixin,
         return obj.supervisor == self.request.user
 
 
+@login_required
+@permission_required('projects.add_project', raise_exception=True)
 def duplicate_project(request, **kwargs):
     """
     Create a duplicate of project
@@ -113,10 +128,12 @@ def duplicate_project(request, **kwargs):
 
 
 class ProjectDeleteView(LoginRequiredMixin,
+                        PermissionRequiredMixin,
                         UserPassesTestMixin,
                         DeleteView):
 
     model = Project
+    permission_required = 'projects.delete_project'
     success_url = reverse_lazy('project_table')
     template_name = 'project_delete.html'
 
@@ -126,10 +143,12 @@ class ProjectDeleteView(LoginRequiredMixin,
 
 
 class EventTableView(LoginRequiredMixin,
+                     PermissionRequiredMixin,
                      ExportMixin,
                      SingleTableMixin,
                      FilterView):
     model = Event
+    permission_required = 'projects.view_event'
     table_class = EventTable
     filterset_class = EventFilter
     template_name = 'event_table.html'
@@ -145,8 +164,10 @@ class EventTableView(LoginRequiredMixin,
 
 
 class EventCreateView(LoginRequiredMixin,
+                      PermissionRequiredMixin,
                       CreateView):
     form_class = EventForm
+    permission_required = 'projects.add_event'
     success_url = reverse_lazy('event_table')
     template_name = 'event.html'
 
@@ -163,9 +184,11 @@ class EventCreateView(LoginRequiredMixin,
 
 
 class EventDetailView(LoginRequiredMixin,
+                      PermissionRequiredMixin,
                       UserPassesTestMixin,
                       DetailView):
     model = Event
+    permission_required = 'projects.view_event'
     context_object_name = 'event'
     template_name = 'event_detail.html'
 
@@ -175,9 +198,11 @@ class EventDetailView(LoginRequiredMixin,
 
 
 class EventUpdateView(LoginRequiredMixin,
+                      PermissionRequiredMixin,
                       UserPassesTestMixin,
                       UpdateView):
     model = Event
+    permission_required = 'projects.change_event'
     form_class = EventForm
     success_url = reverse_lazy('event_table')
     template_name = 'event.html'
@@ -192,6 +217,8 @@ class EventUpdateView(LoginRequiredMixin,
         return obj.supervisor == self.request.user
 
 
+@login_required
+@permission_required('projects.add_event', raise_exception=True)
 def duplicate_event(request, **kwargs):
     """
     Create a duplicate of event
@@ -202,9 +229,11 @@ def duplicate_event(request, **kwargs):
 
 
 class EventDeleteView(LoginRequiredMixin,
+                      PermissionRequiredMixin,
                       UserPassesTestMixin,
                       DeleteView):
     model = Event
+    permission_required = 'projects.delete_event'
     success_url = reverse_lazy('event_table')
     template_name = 'event_delete.html'
 
@@ -214,8 +243,10 @@ class EventDeleteView(LoginRequiredMixin,
 
 
 class LocationCreateView(LoginRequiredMixin,
+                         PermissionRequiredMixin,
                          CreateView):
     model = Location
+    permission_required = 'core.add_location'
     form_class = LocationForm
     success_url = reverse_lazy('event_table')
     template_name = 'location_modal.html'
