@@ -14,8 +14,16 @@
         <div class="container">
 
             <!-- Logo -->
-            {% if user.is_authenticated %}
+            {% if user.is_authenticated and user.groups.all.0.name != 'Follower' %}
                 <a href="#" class="brand-logo">{{ organization_name }}</a>
+                <ul class="logo-adjacent hide-on-med-and-down">
+                    <li class="logo-distance"><a href="{% url 'major_event_table' %}">All events</a></li>
+                </ul>
+            {% elif user.is_authenticated and user.groups.all.0.name == 'Follower'  %}
+                <a href="#" class="brand-logo">{{ project_name }}</a>
+                <ul class="logo-adjacent hide-on-med-and-down">
+                    <li class="logo-distance"><a href="{% url 'major_event_table' %}">All events</a></li>
+                </ul>
             {% else %}
                 <a href="#" class="brand-logo">{{ project_name }}</a>
             {% endif %}
@@ -23,16 +31,13 @@
             <!-- Sidenav -->
             <a href="#" class="sidenav-trigger" data-target="mobile-links"><i class="material-icons">menu</i></a>
 
-
-            <ul class="logo-adjacent hide-on-med-and-down">
-                <li class="logo-distance"><a href="{% url 'major_event_table' %}">All events</a></li>
-            </ul>
-
             <!-- User Account Dropdown -->
             <ul class="right hide-on-med-and-down">
             {% if user.is_authenticated %}
-                <li><a href="{% url 'project_table' %}">Projects</a></li>
-                <li><a href="{% url 'event_table' %}">Events</a></li>
+                {% if user.groups.all.0.name != 'Follower' %}
+                    <li><a href="{% url 'project_table' %}">Projects</a></li>
+                    <li><a href="{% url 'event_table' %}">Events</a></li>
+                {% endif %}
                 <li>
                     <a class="dropdown-trigger-nav" href="#!" data-target="dropdown2">
                         <i class="large material-icons nav-account-icon">account_circle</i>
@@ -59,6 +64,12 @@
 
     {% if user.is_authenticated %}
 
+        <li><a href="{% url 'major_event_table' %}">{% trans "All events" %}</a></li>
+        {% if user.groups.all.0.name != 'Follower' %}
+            <li><a href="{% url 'event_table' %}">{% trans "Events" %}</a></li>
+            <li><a href="{% url 'project_table' %}">{% trans "Projects" %}</a></li>
+        {% endif %}
+        <li class="divider"></li>
         <li><a href="{% url 'account_update' %}">{% trans "Edit account" %}<i class="material-icons">account_circle</i></a></li>
         <li><a href="{% url 'account_change_password' %}">{% trans "Change password" %}<i class="material-icons">lock</i></a></li>
         <li><a href="{% url 'account_api' %}">{% trans "Get API token" %}<i class="material-icons">api</i></a></li>

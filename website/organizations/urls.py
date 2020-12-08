@@ -4,5 +4,5 @@ from .views import (
 )
 
 urlpatterns = [
-    path('', MajorTableView.as_view(), name='major_event_table'),
+    path('events/all/', MajorTableView.as_view(), name='major_event_table'),
 ]
