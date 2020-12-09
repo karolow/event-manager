@@ -88,7 +88,7 @@ class ProjectDetailView(LoginRequiredMixin,
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object(
-            queryset=Project.objects.all().filter(supervisor=self.request.user))
+            queryset=Project.objects.all())
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -97,8 +97,7 @@ class ProjectDetailView(LoginRequiredMixin,
         return context
 
     def get_queryset(self):
-        user = self.request.user
-        return self.object.events.filter(supervisor=user)
+        return self.object.events.all()
 
 
 class ProjectUpdateView(LoginRequiredMixin,
@@ -110,6 +109,11 @@ class ProjectUpdateView(LoginRequiredMixin,
     form_class = ProjectForm
     success_url = reverse_lazy('project_table')
     template_name = 'project.html'
+
+    def get_form_kwargs(self):
+        kwargs = super(ProjectUpdateView, self).get_form_kwargs()
+        kwargs.update({'project_user': self.request.user})
+        return kwargs
 
     def test_func(self):
         obj = self.get_object()
