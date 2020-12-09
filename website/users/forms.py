@@ -74,10 +74,16 @@ class ExtendedSignupForm(SignupForm):
                         )
 
     def save(self, request):
+        """
+        Asign user to a group
+        """
         user = super(ExtendedSignupForm, self).save(request)
         user.organization = self.cleaned_data['organization']
         if str(self.cleaned_data['organization']) == 'Other':
             group = Group.objects.get(name='Follower')
+            user.groups.add(group)
+        else:
+            group = Group.objects.get(name='Coordinator')
             user.groups.add(group)
         user.save()
         return user
