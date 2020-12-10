@@ -16,6 +16,14 @@
             <!-- Logo -->
             {% if user.is_authenticated and user.groups.all.0.name != 'Follower' %}
                 <a href="#" class="brand-logo">{{ organization_name }}</a>
+                <ul class="logo-adjacent hide-on-med-and-down">
+                    <li class="logo-distance"><a href="{% url 'major_event_table' %}">All events</a></li>
+                </ul>
+            {% elif user.is_authenticated and user.groups.all.0.name == 'Follower'  %}
+                <a href="#" class="brand-logo">{{ project_name }}</a>
+                <ul class="logo-adjacent hide-on-med-and-down">
+                    <li class="logo-distance"><a href="{% url 'major_event_table' %}">All events</a></li>
+                </ul>
             {% else %}
                 <a href="#" class="brand-logo">{{ project_name }}</a>
             {% endif %}
