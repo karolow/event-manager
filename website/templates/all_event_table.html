@@ -3,23 +3,36 @@
 {% load materializecss %}
 {% load django_tables2 %}
 
-{% block title %}{% trans "Projects" %}{% endblock title %}
+{% block title %}{% trans "All Events" %}{% endblock title %}
 
 {% block content %}
 
 {% if user.groups.all.0.name == 'Coordinator' %}
 <div>
-  <a href="{% url 'project_table' %}" class="waves-effect waves-light btn-small btn-mini">My projects</a>
-  <a href="{% url 'organization_project_table' %}" class="waves-effect waves-light btn-small btn-mini">All</a>
+  <a href="{% url 'event_table' %}" class="waves-effect waves-light btn-small btn-mini">My events</a>
+  <a href="{% url 'organization_event_table' %}" class="waves-effect waves-light btn-small btn-mini">All</a>
 </div>
 {% endif %}
 
 {% if filter %}
 <div class="row">
   <div class="col s12 no-padding">
-    <h1>{% trans "Projects" %}</h1>
+    <h1>{% trans "All Events" %}</h1>
     <form action="" method="get" class="form form-inline">
-      {{ filter.form|materializecss }}
+        <div class="row">
+          <div class="col s12 m3">
+            {{ filter.form.title|materializecss }}
+          </div>
+          <div class="col s12 m3">
+            {{ filter.form.project|materializecss }}
+          </div>
+          <div class="col s12 m3">
+            {{ filter.form.type|materializecss }}
+          </div>
+          <div class="col s12 m3">
+            {{ filter.form.status|materializecss }}
+          </div>
+        </div>
       <button class="table waves-effect waves-light btn-small grey-30" type="submit" name="button"><i class="material-icons left">search</i>Search</button>
     </form>
   </div>
@@ -31,6 +44,7 @@
 <!-- Export Dropdown -->
 <div class="row table-button">
   <a class='dropdown-trigger btn-small grey-30' href='#' data-target='data_export'><i class="material-icons left">arrow_drop_down</i>Export</a>
+
   <ul id='data_export' class='dropdown-content'>
   {% for format in view.export_formats %}
     <li><a href="{% export_url format %}">{{ format }}</a></li>

@@ -7,6 +7,13 @@
 
 {% block content %}
 
+{% if user.groups.all.0.name == 'Coordinator' %}
+<div>
+  <a href="{% url 'event_table' %}" class="waves-effect waves-light btn-small btn-mini">My events</a>
+  <a href="{% url 'organization_event_table' %}" class="waves-effect waves-light btn-small btn-mini">All</a>
+</div>
+{% endif %}
+
 {% if filter %}
 <div class="row">
   <div class="col s12 no-padding">
