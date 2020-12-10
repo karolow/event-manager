@@ -25,7 +25,7 @@ body {
 }
 
 h1 {
-  font-size: 2.6rem;
+  font-size: 2.8rem;
   font-weight: 700;
   line-height: 110%;
   margin: 1.9466666667rem 0 2rem 0;
@@ -596,6 +596,18 @@ button.table {
 
 .table-icon {
   font-size: 20px;
+}
+
+.btn-mini {
+  height: 22.4px;
+  line-height: 22.4px;
+  font-size: 11px;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.btn-mini i {
+  font-size: 1rem;
 }
 
 /* Additional hooks

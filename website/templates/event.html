@@ -16,12 +16,7 @@
       {{ form.title|materializecss }}
       <div class="row">
         <div class="col s12 m6">
-          {% if form.project.value %}
-            {{ form.project|materializecss }}
-          {% else %}
-            <label for="disabled">{% trans "Disabled" %}</label>
-            <input disabled value="No project to choose" id="disabled" type="text" class="validate">
-          {% endif %}
+          { form.project|materializecss }}
         </div>
         <div class="col s12 m6">
           {{ form.type|materializecss }}

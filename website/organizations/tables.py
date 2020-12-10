@@ -2,10 +2,10 @@ import django_tables2 as tables
 from django_tables2 import columns
 from django_tables2.utils import A
 
-from projects.models import Event
+from projects.models import Event, Project
 
 
-class MajorEventTable(tables.Table):
+class AllEventTable(tables.Table):
     title = columns.LinkColumn('event_detail', args=[A('pk')], attrs={
                                "td": {"class": "bold no-color"}})
     project = columns.Column(visible=True)
@@ -29,3 +29,15 @@ class MajorEventTable(tables.Table):
     class Meta:
         model = Event
         fields = ('title', 'project', 'start_at', 'status')
+
+
+class AllProjectTable(tables.Table):
+    title = columns.LinkColumn('project_detail', args=[A('pk')], attrs={
+                               "td": {"class": "bold no-color"}})
+    activity = columns.Column(visible=True)
+    organization = columns.Column(visible=False)
+    website = columns.Column(visible=False)
+
+    class Meta:
+        model = Project
+        fields = ('title', 'activity', 'organization', 'website')
