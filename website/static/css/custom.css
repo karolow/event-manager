@@ -148,6 +148,10 @@ button:focus {
   cursor: pointer;
 }
 
+.btn-margin {
+  margin: 15px 0 15px 0;
+}
+
 .btn:hover, .btn-large:hover, .btn-small:hover {
   background-color: #3700b3;
 }
