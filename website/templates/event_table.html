@@ -29,6 +29,14 @@
         <div class="col s12 m3">
           {{ filter.form.type|materializecss }}
         </div>
+        <!-- <div class="col s12 m6">
+          <div class="input-field col s12">
+            <div id="{{ filter.form.start_at.name }}">
+              <input type="text" id="id_{{ filter.form.start_at.name }}" name="{{ filter.form.start_at.name }}" {% if filter.form.start_at.value %}value="{{ filter.form.start_at.value|date:'Y-m-d H:i' }}"{% endif %} class=" validate">
+              <label for="id_{{ filter.form.start_at.name }}">{{ filter.form.start_at.label }}</label>
+            </div>
+          </div>
+        </div> -->
         <div class="col s12 m3">
           {{ filter.form.status|materializecss }}
         </div>
