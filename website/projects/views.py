@@ -189,16 +189,16 @@ class EventCreateView(LoginRequiredMixin,
 
 class EventDetailView(LoginRequiredMixin,
                       PermissionRequiredMixin,
-                      UserPassesTestMixin,
+                      # UserPassesTestMixin,
                       DetailView):
     model = Event
     permission_required = 'projects.view_event'
     context_object_name = 'event'
     template_name = 'event_detail.html'
 
-    def test_func(self):
-        obj = self.get_object()
-        return obj.supervisor.organization == self.request.user.organization
+    # def test_func(self):
+    #     obj = self.get_object()
+    #     return obj.supervisor.organization == self.request.user.organization
 
 
 class EventUpdateView(LoginRequiredMixin,
