@@ -19,7 +19,7 @@
       <div class="col-block col s12 m6">
 
         <div class="row display display-header">
-          {% trans "activity" %}: <b>{{ project.activity }}</b>
+          {% trans "platform" %}: <b>{{ project.activity }}</b>
         </div>
         <div class="row display no-bottom-border">
           {{ project.description }}
@@ -47,23 +47,25 @@
 
         {% if project.contact_person %}
           <div class="row display">
-            {{ project.contact_person }}
+            {% trans "coordinator" %}: {{ project.contact_person }}
           </div>
         {% endif %}
-
       </div>
     </div>
   </div>
 </div>
 
-<h2>{% trans "Events" %}</h2>
+<div class="row">
+<div class="col-block col s12 m10 no-padding">
+  <div class="row">
+
 <table>
   <thead>
     <tr>
       <th>{% trans "Title" %}</th>
-      <th>{% trans "Type" %}</th>
-      <th>{% trans "Start" %}</th>
-      <th>{% trans "End" %}</th>
+      <th class="hide-on-small-only">{% trans "Type" %}</th>
+      <th class="hide-on-med-and-down">{% trans "Start" %}</th>
+      <th class="hide-on-med-and-down">{% trans "End" %}</th>
       <th>{% trans "Status" %}</th>
     </tr>
   </thead>
@@ -73,25 +75,26 @@
 			<td class="title">
 				<b><a href="{% url 'event_detail' event.pk %}">{{ event.title }}</a></b>
 			</td>
-      <td>
+      <td class="hide-on-small-only">
 				{{ event.type }}
 			</td>
-      <td>
-        {{ event.start_at }}
+      <td class="hide-on-med-and-down">
+        {{ event.start_at|date:'Y-m-d H:i' }}
       </td>
-      <td>
-        {{ event.end_at }}
+      <td class="hide-on-med-and-down">
+        {{ event.end_at|date:'Y-m-d H:i' }}
       </td>
-			<td class="status">
+			<td>
 				{{ event.get_status_display }}
 			</td>
 		</tr>
 		{% endfor %}
 	</tbody>
 </table>
+</div>
 
 {% if is_paginated %}
-  <div>
+  <div class="row">
     <ul class="pagination">
       {% if page_obj.has_previous %}
         <li><a href="?page={{ page_obj.previous_page_number }}"><i class="material-icons">chevron_left</i></a></li>
@@ -112,6 +115,8 @@
       {% endif %}
     </ul>
   </div>
+</div>
+</div>
 {% endif %}
 
 {% endblock content %}
