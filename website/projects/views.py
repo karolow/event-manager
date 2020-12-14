@@ -1,7 +1,10 @@
+from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
+from django.db.models import Q
 
 from django.views.generic import (
+    View,
     ListView,
     DetailView,
     CreateView,
@@ -24,7 +27,6 @@ from django_tables2.export.views import ExportMixin
 from .models import (
     Project,
     Event,
-    Activity,
 )
 from core.models import Location
 
@@ -83,7 +85,7 @@ class ProjectDetailView(LoginRequiredMixin,
                         SingleObjectMixin,
                         ListView):
     permission_required = 'projects.view_project'
-    paginate_by = 5
+    paginate_by = 1
     template_name = 'project_detail.html'
 
     def get(self, request, *args, **kwargs):
@@ -97,7 +99,7 @@ class ProjectDetailView(LoginRequiredMixin,
         return context
 
     def get_queryset(self):
-        return self.object.events.all()
+        return self.object.events.filter(~Q(status='d')).order_by('-start_at')
 
 
 class ProjectUpdateView(LoginRequiredMixin,
@@ -254,3 +256,27 @@ class LocationCreateView(LoginRequiredMixin,
     form_class = LocationForm
     success_url = reverse_lazy('event_table')
     template_name = 'location_modal.html'
+
+
+class TextEventInfoView(SingleObjectMixin, View):
+    model = Event
+
+    def get(self, request, *args, **kwargs):
+        event = self.get_object()
+
+        start = event.start_at.strftime('%d-%m-%Y %H:%M')
+        end = event.end_at.strftime('–%H:%M') if event.start_at.strftime(
+            '%d-%m-%Y') == event.end_at.strftime('%d-%m-%Y') else event.end_at.strftime(' | %d-%m-%Y %H:%M')
+        type = f'{event.type}' if not event.online else f'{event.type} online'
+        location = f'{event.location}' if not event.room else f'{event.location}, {event.room}'
+
+        content = [
+            event.title,
+            type,
+            f'{start}{end}',
+            location,
+            event.description,
+            event.link,
+        ]
+        content_export = '\n\n'.join(content)
+        return HttpResponse(content_export, content_type='text/plain; charset=utf8')
