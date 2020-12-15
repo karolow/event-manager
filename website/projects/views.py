@@ -65,7 +65,6 @@ class ProjectCreateView(LoginRequiredMixin,
                         CreateView):
     form_class = ProjectForm
     permission_required = 'projects.add_project'
-    success_url = reverse_lazy('project_table')
     template_name = 'project.html'
 
     def form_valid(self, form):
@@ -109,7 +108,6 @@ class ProjectUpdateView(LoginRequiredMixin,
     model = Project
     permission_required = 'projects.change_project'
     form_class = ProjectForm
-    success_url = reverse_lazy('project_table')
     template_name = 'project.html'
 
     def get_form_kwargs(self):

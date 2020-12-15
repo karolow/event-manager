@@ -17,6 +17,12 @@ from organizations.models import Activity
 
 
 class Project(Entry, ContactDetails):
+    parent_project = models.ForeignKey(
+        'self',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
     activity = models.ForeignKey(
         Activity,
         on_delete=models.SET_NULL,
@@ -35,6 +41,9 @@ class Project(Entry, ContactDetails):
         blank=True,
     )
     multiple_locations = models.TextField(max_length=1000, blank=True)
+    budget = models.IntegerField(null=True, blank=True)
+    outside_funding = models.IntegerField(null=True, blank=True)
+    outside_funders = models.TextField(max_length=1000, blank=True)
 
     def get_absolute_url(self):
         return reverse('project_detail', args=[str(self.id)])
@@ -89,6 +98,7 @@ class Event(CloneMixin, Entry, Category, Ownership, Status):
         Location,
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,
     )
 
     def get_absolute_url(self):

@@ -68,10 +68,15 @@
         </div>
         <div class="col s12 m4">
           {{ form.audiences|materializecss }}
+          {{ form.audience_groups|materializecss }}
+          {{ form.municipal_programs|materializecss }}
         </div>
         <div class="col s12 m4">
-          {{ form.online|materializecss }}
-          {{ form.tickets|materializecss }}
+          <label>Other</label>
+          <div class="other_group">
+            {{ form.online|materializecss }}
+            {{ form.tickets|materializecss }}
+          </div>
         </div>
       </div>
       <div class="row">
