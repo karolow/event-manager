@@ -49,7 +49,7 @@ class ProjectTableView(LoginRequiredMixin,
     table_class = ProjectTable
     filterset_class = ProjectFilter
     template_name = 'project_table.html'
-    paginate_by = 5
+    paginate_by = 20
     dataset_kwargs = {'title': 'Projects'}
     export_formats = ['csv', 'ods', 'xlsx']
 
@@ -85,7 +85,7 @@ class ProjectDetailView(LoginRequiredMixin,
                         SingleObjectMixin,
                         ListView):
     permission_required = 'projects.view_project'
-    paginate_by = 1
+    paginate_by = 10
     template_name = 'project_detail.html'
 
     def get(self, request, *args, **kwargs):
@@ -158,7 +158,7 @@ class EventTableView(LoginRequiredMixin,
     table_class = EventTable
     filterset_class = EventFilter
     template_name = 'event_table.html'
-    paginate_by = 10
+    paginate_by = 20
     dataset_kwargs = {'title': 'Events'}
     export_formats = ['csv', 'ods', 'xlsx']
 
