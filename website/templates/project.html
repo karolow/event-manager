@@ -24,13 +24,26 @@
               <label for="autocomplete-input">{{ form.location.label }}</label>
             </div>
             <div class="col s12 add-location-row">
-              <a class="waves-effect waves-light btn btn-small modal-trigger" href="#addLocation">Add location</a>
+              <a class="waves-effect waves-light btn btn-small modal-trigger grey-30" href="#addLocation">Add location</a>
             </div>
           </div>
         </div>
         {{ form.location }}
         <div class="col s12 m6">
           {{ form.multiple_locations|materializecss }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 m6">
+          {{ form.outside_funding|materializecss }}
+        </div>
+        <div class="col s12 m6">
+          {{ form.outside_funders|materializecss }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 m6">
+          {{ form.budget|materializecss:'icon=attach_money' }}
         </div>
       </div>
       <div class="row">
