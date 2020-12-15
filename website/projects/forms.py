@@ -45,9 +45,15 @@ class EventForm(forms.ModelForm):
         )
 
     def __init__(self, *args, **kwargs):
-        user = kwargs.pop('project_user')
+        request = kwargs.pop('request')
+        user = request.user
+        project_pk = request.GET.get('next')
         super(EventForm, self).__init__(*args, **kwargs)
-        self.fields['project'].queryset = Project.objects.filter(supervisor=user)
+        if project_pk is not None:
+            self.fields['project'].queryset = Project.objects.filter(supervisor=user)
+            self.fields['project'].initial = Project.objects.get(pk=project_pk[-37:-1])
+        else:
+            self.fields['project'].queryset = Project.objects.filter(supervisor=user)
 
 
 class LocationForm(forms.ModelForm):

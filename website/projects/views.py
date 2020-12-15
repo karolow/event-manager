@@ -174,7 +174,6 @@ class EventCreateView(LoginRequiredMixin,
                       CreateView):
     form_class = EventForm
     permission_required = 'projects.add_event'
-    success_url = reverse_lazy('event_table')
     template_name = 'event.html'
 
     def form_valid(self, form):
@@ -185,7 +184,7 @@ class EventCreateView(LoginRequiredMixin,
 
     def get_form_kwargs(self):
         kwargs = super(EventCreateView, self).get_form_kwargs()
-        kwargs.update({'project_user': self.request.user})
+        kwargs.update({'request': self.request})
         return kwargs
 
 
@@ -210,12 +209,11 @@ class EventUpdateView(LoginRequiredMixin,
     model = Event
     permission_required = 'projects.change_event'
     form_class = EventForm
-    success_url = reverse_lazy('event_table')
     template_name = 'event.html'
 
     def get_form_kwargs(self):
         kwargs = super(EventUpdateView, self).get_form_kwargs()
-        kwargs.update({'project_user': self.request.user})
+        kwargs.update({'request': self.request})
         return kwargs
 
     def test_func(self):
