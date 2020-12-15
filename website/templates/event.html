@@ -32,7 +32,7 @@
               <label for="autocomplete-input">{{ form.location.label }}</label>
             </div>
             <div class="col s12 add-location-row">
-              <a class="waves-effect waves-light btn btn-small modal-trigger" href="#addLocation">Add location</a>
+              <a class="waves-effect waves-light btn btn-small modal-trigger grey-30" href="#addLocation">Add location</a>
             </div>
           </div>
         </div>
@@ -68,10 +68,15 @@
         </div>
         <div class="col s12 m4">
           {{ form.audiences|materializecss }}
+          {{ form.audience_groups|materializecss }}
+          {{ form.municipal_programs|materializecss }}
         </div>
         <div class="col s12 m4">
-          {{ form.online|materializecss }}
-          {{ form.tickets|materializecss }}
+          <label>Other</label>
+          <div class="other_group">
+            {{ form.online|materializecss }}
+            {{ form.tickets|materializecss }}
+          </div>
         </div>
       </div>
       <div class="row">
@@ -115,7 +120,7 @@
           {{ form.contact_person|materializecss:'icon=face' }}
         </div>
       </div>
-      <button class="btn waves-effect waves-light" type="submit">Save<i class="material-icons right">send</i></button>
+      <button class="btn waves-effect waves-light btn-margin" type="submit">Save<i class="material-icons right">send</i></button>
     </form>
   </div>
 </div>

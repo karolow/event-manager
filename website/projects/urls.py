@@ -13,6 +13,7 @@ from .views import (
     duplicate_event,
     EventDeleteView,
     LocationCreateView,
+    TextEventInfoView,
 )
 
 urlpatterns = [
@@ -28,5 +29,7 @@ urlpatterns = [
     path('events/<uuid:pk>/update/', EventUpdateView.as_view(), name='event_update'),
     path('events/<uuid:pk>/duplicate/', duplicate_event, name='event_duplicate'),
     path('events/<uuid:pk>/delete/', EventDeleteView.as_view(), name='event_delete'),
+    path('events/<uuid:pk>/txt/', TextEventInfoView.as_view(), name='event_txt_info'),
     path('locations/new/', LocationCreateView.as_view(), name='location_create'),
+
 ]

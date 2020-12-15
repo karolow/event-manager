@@ -4,6 +4,7 @@
 {% block title %}{{ event.title }}{% endblock title %}
 
 {% block content %}
+
 <div id="detail-view" class="row">
   <div class="col s12 no-padding">
     <h1>{{ event.title }}
@@ -17,81 +18,106 @@
       <!-- Left block -->
       <div class="col-block col s12 m6">
 
-        <div class="row display display-header">
-          <div class="col s12 m6">
-            <div class="row"><b>{{ event.project }}</b></div>
-          </div>
-          <div class="col s12 m6">
-            <div class="row"><b>{{ event.type|lower }}</b> {{ event.get_status_display|lower }}</div>
-          </div>
+        <div class="row display display-header m6">
+          <b>{{ event.project }}</b> | {{ event.type }} | <i>{{ event.get_status_display|lower }}</i>
         </div>
-
         <div class="row display">
-          <div class="col s12 m6">
-            <div class="row">{{ event.start_at }}</div>
-            <div class="row">{{ event.end_at }}</div>
-          </div>
-          <div class="col s12 m6">
-            <div class="row">{{ event.location }}</div>
-            <div class="row">{{ event.room }}</div>
-          </div>
-        </div>
-
-        <div class="row display">
-          <div class="col s12 m6">
-            <div class="row">{{ event.fields }}</div>
-          </div>
-          <div class="col s12 m6">
-            <div class="row">{{ event.audiences }}</div>
-          </div>
-        </div>
-
-        <div class="row display">
-          <div class="col s12 m6">
-            <div class="row">{% trans "particip. num planned" %}: {{ event.particip_num_predict }}</div>
-            {% if event.particip_num_actual %}
-              <div class="row">{% trans "particip. num actual" %}: {{ event.particip_num_actual }}</div>
+          <b>
+            {{ event.start_at|date:'d-m-Y H:i' }}{% if event.start_at|date != event.end_at|date %}
+            | {{ event.end_at|date:'d-m-Y H:i' }}
+            {% else %}–{{ event.end_at|date:'H:i' }}
             {% endif %}
-          </div>
-          <div class="col s12 m6">
-            <div class="row">{% trans "tickets" %}: {{ event.tickets|yesno:"yes,no" }}</div>
-            {% if event.fees %}
-              <div class="row">{% trans "fees" %}: {{ event.fees }}</div>
-            {% endif %}
-            {% if event.registr_link %}
-              <div class="row"><a href="{{ event.registr_link }}" target="_blank">{% trans "registration url" %}</a></div>
-            {% endif %}
-          </div>
+          </b>
         </div>
-
         <div class="row display">
-          <div class="col s12 m6">
-            <div class="row">{{ event.get_ownership_display|lower }} {% trans "event" %}</div>
-          </div>
-          <div class="col s12 m6">
-            <div class="row">{% trans "partners" %}: {{ event.partners }}</div>
-          </div>
+          {% if event.online %}
+            <b>{{ event.online|yesno:"online event,offline event" }}</b>
+          {% endif %}
+          {% if event.room %}
+            | {{ event.location }}
+          {% endif %}
+          {% if event.room %}
+            | {{ event.room }}
+          {% endif %}
         </div>
-
-        <div class="row display">
-          <div class="col s12 m6">
-            <div class="row">{% trans "online event" %}: {{ event.online|yesno:"yes,no" }}</div>
-          </div>
-          <div class="col s12 m6">
-            <div class="row">{% trans "contact person" %}: {{ event.contact_person }}</div>
-          </div>
-        </div>
-
-        <div class="row display no-bottom-border">{{ event.comment }}</div>
-
       </div>
 
       <!-- Right block -->
       <div class="col-block col s12 m4">
-        <div class="row display display-header">{% trans "about" %}</div>
-        <div class="row display no-bottom-border">{{ event.description }}</div>
+        <div class="row display display-header no-top-border">
+          {{ event.fields }}
+        </div>
+        {% if event.location %}
+          <div class="row display">
+            {{ event.audiences }}
+          </div>
+        {% endif %}
+        <div class="row display">
+          {{ event.tickets|yesno:"tickets: ,free entrance" }}
+          {% if event.fees and event.tickets %}
+            {{ event.fees }}
+          {% endif %}
+          {% if event.registr_link %}
+            | register or buy tickets <a href="{{ event.registration }}" target="_blank"><i class="material-icons icon-blue tiny">call_made</i></a>
+          {% endif %}
+        </div>
       </div>
     </div>
+
+    <div class="col-block col s12 m6">
+      <div class="row display">
+        {{ event.description }}
+      </div>
+      <div class="row display">
+        {{ event.get_ownership_display|lower }} event
+        {% if event.partners %}
+          {% trans "| partners:" %} {{ event.partners }}
+        {% endif %}
+      </div>
+      {% if event.particip_num_predict or event.particip_num_actual %}
+        <div class="row display">
+          {% if event.particip_num_predict %}
+            participants num | predicted:
+            {{ event.particip_num_predict }}
+          {% endif %}
+          {% if event.particip_num_actual %}
+            actual:
+            {{ event.particip_num_actual }}
+          {% endif %}
+        </div>
+      {% endif %}
+      {% if event.budget %}
+        <div class="row display">
+          budget: {{ event.budget }} PLN
+        </div>
+      {% endif %}
+      {% if event.comment %}
+        <div class="row display">
+          <i>{{ event.comment }}</i>
+        </div>
+      {% endif %}
+        <div class="row display no-bottom-border">
+          contact person: {{ event.contact_person|default:"<i>not available</i>" }}
+        </div>
+      </div>
+
+    </div>
+    <div class="col s12 m10">
+      <div class="row">
+        <div class="left">
+          <a class='btn-margin waves-effect waves-light btn-small grey-30' href='{% url 'event_txt_info' pk=event.id %}' data-target='event_txt_info'><i class="material-icons left">assignment</i>Copy info</a>
+        </div>
+
+        {% if user.is_authenticated and user.groups.all.0.name == 'Coordinator' %}
+          <div class="right" style="white-space: nowrap">
+            <a href="{% url 'event_update' event.id %}"><i class="material-icons icon-blue">edit</i></a>
+            <a href="{% url 'event_duplicate' event.id %}"><i class="material-icons icon-blue">content_copy</i></a>
+            <a href="{% url 'event_delete' event.id %}"><i class="material-icons icon-red">delete</i></a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
   </div>
 </div>
 

@@ -36,8 +36,9 @@ class AllProjectTable(tables.Table):
                                "td": {"class": "bold no-color"}})
     activity = columns.Column(visible=True)
     organization = columns.Column(visible=False)
-    website = columns.Column(visible=False)
+    website = columns.Column(visible=True)
+    email = columns.Column(visible=True)
 
     class Meta:
         model = Project
-        fields = ('title', 'activity', 'organization', 'website')
+        fields = ('title', 'activity', 'organization', 'website', 'email')

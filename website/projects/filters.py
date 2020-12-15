@@ -1,3 +1,4 @@
+
 import django_filters
 
 from .models import Event, Project
@@ -10,7 +11,7 @@ from functools import reduce
 
 def selected_projects(request):
     """
-    Limit project choice
+    Limit project field choice
     """
 
     if request is None:

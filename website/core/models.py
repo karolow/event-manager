@@ -1,6 +1,7 @@
 import uuid
 from django.contrib.gis.db import models
 from multiselectfield import MultiSelectField
+from django.utils.translation import ugettext as _
 
 
 class PersistentItem(models.Model):
@@ -45,9 +46,9 @@ class Ownership(models.Model):
     EXTERNAL = 'e'
 
     OWNERSHIP_CHOICES = [
-        (OWN, 'Own'),
-        (COLLABORATION, 'Collaboration'),
-        (EXTERNAL, 'External'),
+        (OWN, _('Own')),
+        (COLLABORATION, _('Collaboration')),
+        (EXTERNAL, _('External')),
     ]
 
     ownership = models.CharField(
@@ -66,9 +67,9 @@ class Status(models.Model):
     CANCELLED = 'c'
 
     STATUS_CHOICES = (
-        (PUBLISHED, 'Published'),
-        (DRAFT, 'Draft'),
-        (CANCELLED, 'Cancelled'),
+        (PUBLISHED, _('Published')),
+        (DRAFT, _('Draft')),
+        (CANCELLED, _('Cancelled')),
     )
 
     status = models.CharField(
@@ -90,43 +91,70 @@ class Type(PersistentItem):
 
 class Category(models.Model):
     FIELDS = (
-        ('architecture', 'architecture'),
-        ('heritage', 'heritage'),
-        ('cultural education', 'cultural education'),
-        ('cinema', 'cinema'),
-        ('photography', 'photography'),
-        ('video games', 'video games'),
-        ('interdisciplinary', 'interdisciplinary'),
-        ('cabaret', 'cabaret'),
-        ('cuisine', 'cuisine'),
-        ('literature', 'literature'),
-        ('fashion', 'fashion'),
-        ('music', 'music'),
-        ('new media', 'new media'),
-        ('traveling', 'traveling'),
-        ('design', 'desing'),
-        ('urban intervension', 'urban intervension'),
-        ('craft', 'craft'),
-        ('street art', 'street art'),
-        ('visual arts', 'visual arts'),
-        ('dance', 'dance'),
-        ('theatre', 'theatre'),
-        ('other', 'other'),
+        ('architecture', _('architecture')),
+        ('heritage', _('heritage')),
+        ('cultural education', _('cultural education')),
+        ('ecology', _('ecology')),
+        ('cinema', _('cinema')),
+        ('photography', _('photography')),
+        ('video games', _('video games')),
+        ('interdisciplinary', _('interdisciplinary')),
+        ('cabaret', _('cabaret')),
+        ('cuisine', _('cuisine')),
+        ('folk/local culture', _('folk/local culture')),
+        ('literature', _('literature')),
+        ('fashion', _('fashion')),
+        ('music', _('music')),
+        ('science', _('science')),
+        ('new media', _('new media')),
+        ('traveling', _('traveling')),
+        ('design', _('desing')),
+        ('urban intervension', _('urban intervension')),
+        ('craft', _('craft')),
+        ('street art', _('street art')),
+        ('visual arts', _('visual arts')),
+        ('dance', _('dance')),
+        ('theatre', _('theatre')),
+        ('other', _('other')),
     )
 
     fields = MultiSelectField(choices=FIELDS, null=True, blank=True)
 
     AUDIENCES = (
-        ('young kids', 'young kids'),
-        ('primary school', 'primary school'),
-        ('teenagers', 'teenagers'),
-        ('students', 'students'),
-        ('adults', 'adults'),
-        ('seniors', 'seniors'),
-        ('all', 'all')
+        ('young kids', _('young kids')),
+        ('primary school', _('primary school')),
+        ('teenagers', _('teenagers')),
+        ('students', _('students')),
+        ('adults', _('adults')),
+        ('seniors', _('seniors')),
+        ('all', _('all'))
     )
 
     audiences = MultiSelectField(choices=AUDIENCES, null=True, blank=True)
+
+    AUDIENCE_GROUPS = (
+        ('disadvantaged groups', _('disadvantaged groups')),
+        ('people with disabilities', _('people with disabilities')),
+        ('district residents', _('district residents')),
+        ('pupils', _('pupils')),
+        ('artists / creators', _('artists / creators')),
+        ('event organizers', _('event organizers')),
+        ('ngo representatives', _('ngo representatives')),
+        ('educators', _('educators')),
+        ('activists', _('activists')),
+    )
+
+    audience_groups = MultiSelectField(choices=AUDIENCE_GROUPS, null=True, blank=True)
+
+    MUNICIPAL_PROGRAMS = (
+        ('Akacja Lato w mieście', _('Akacja Lato w mieście')),
+        ('Akcja Zima w mieście', _('Akcja Zima w mieście')),
+        ('Dla seniorów', _('Dla seniorów')),
+        ('Katowice bez barier', _('Katowice bez barier')),
+        ('Wydarzenie okolicznościowe', _('Wydarzenie okolicznościowe')),
+    )
+
+    municipal_programs = MultiSelectField(choices=MUNICIPAL_PROGRAMS, null=True, blank=True)
 
     class Meta:
         abstract = True
