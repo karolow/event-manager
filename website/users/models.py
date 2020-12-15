@@ -1,3 +1,4 @@
+import uuid
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -5,6 +6,11 @@ from organizations.models import Organization
 
 
 class CustomUser(AbstractUser):
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False,
+    )
     organization = models.ForeignKey(
         Organization,
         on_delete=models.SET_NULL,
