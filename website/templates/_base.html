@@ -28,7 +28,7 @@
 
     {% with request.path|slice:"-10:" as path %}
       {% if user.groups.all.0.name != 'Follower' %}
-        {% if '/events/' in request.path and '/new/' not in request.path %}
+        {% if '/events/' in request.path and '/new/' not in request.path and '/update/' not in request.path %}
           <div class="fixed-action-btn">
             <a href="{% url 'event_create' %}" class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">add</i></a>
           </div>
@@ -36,9 +36,9 @@
           <div class="fixed-action-btn">
             <a href="{% url 'project_create' %}" class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">add</i></a>
           </div>
-        {% elif '/projects/' in request.path and '/new/' not in request.path %}
+        {% elif '/projects/' in request.path and '/new/' not in request.path and '/update/' not in request.path %}
           <div class="fixed-action-btn">
-            <a href="{% url 'event_create' %}" class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">add</i></a>
+            <a href="{% url 'event_create' %}?next={{ request.get_full_path }}" class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">add</i></a>
           </div>
         {% endif %}
       {% endif %}

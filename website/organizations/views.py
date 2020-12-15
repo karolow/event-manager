@@ -96,6 +96,9 @@ class OrganizationProjectTableView(LoginRequiredMixin,
     dataset_kwargs = {'title': 'Projects'}
     export_formats = ['csv', 'ods', 'xlsx']
 
+    # exclude columns from table export:
+    exclude_columns = ('actions')
+
     def get_queryset(self):
         return Project.objects \
             .filter(supervisor__organization=self.request.user.organization)
@@ -124,6 +127,9 @@ class AllOrganizationsProjectTableView(LoginRequiredMixin,
     paginate_by = 20
     dataset_kwargs = {'title': 'Projects'}
     export_formats = ['csv', 'ods', 'xlsx']
+
+    # exclude columns from table export:
+    exclude_columns = ('actions')
 
     def get_queryset(self):
         return Project.objects.all()

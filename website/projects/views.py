@@ -1,7 +1,10 @@
+from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
+from django.db.models import Q
 
 from django.views.generic import (
+    View,
     ListView,
     DetailView,
     CreateView,
@@ -24,7 +27,6 @@ from django_tables2.export.views import ExportMixin
 from .models import (
     Project,
     Event,
-    Activity,
 )
 from core.models import Location
 
@@ -47,7 +49,7 @@ class ProjectTableView(LoginRequiredMixin,
     table_class = ProjectTable
     filterset_class = ProjectFilter
     template_name = 'project_table.html'
-    paginate_by = 5
+    paginate_by = 20
     dataset_kwargs = {'title': 'Projects'}
     export_formats = ['csv', 'ods', 'xlsx']
 
@@ -63,7 +65,6 @@ class ProjectCreateView(LoginRequiredMixin,
                         CreateView):
     form_class = ProjectForm
     permission_required = 'projects.add_project'
-    success_url = reverse_lazy('project_table')
     template_name = 'project.html'
 
     def form_valid(self, form):
@@ -83,7 +84,7 @@ class ProjectDetailView(LoginRequiredMixin,
                         SingleObjectMixin,
                         ListView):
     permission_required = 'projects.view_project'
-    paginate_by = 5
+    paginate_by = 10
     template_name = 'project_detail.html'
 
     def get(self, request, *args, **kwargs):
@@ -97,7 +98,7 @@ class ProjectDetailView(LoginRequiredMixin,
         return context
 
     def get_queryset(self):
-        return self.object.events.all()
+        return self.object.events.filter(~Q(status='d')).order_by('-start_at')
 
 
 class ProjectUpdateView(LoginRequiredMixin,
@@ -107,7 +108,6 @@ class ProjectUpdateView(LoginRequiredMixin,
     model = Project
     permission_required = 'projects.change_project'
     form_class = ProjectForm
-    success_url = reverse_lazy('project_table')
     template_name = 'project.html'
 
     def get_form_kwargs(self):
@@ -156,7 +156,7 @@ class EventTableView(LoginRequiredMixin,
     table_class = EventTable
     filterset_class = EventFilter
     template_name = 'event_table.html'
-    paginate_by = 10
+    paginate_by = 20
     dataset_kwargs = {'title': 'Events'}
     export_formats = ['csv', 'ods', 'xlsx']
 
@@ -172,7 +172,6 @@ class EventCreateView(LoginRequiredMixin,
                       CreateView):
     form_class = EventForm
     permission_required = 'projects.add_event'
-    success_url = reverse_lazy('event_table')
     template_name = 'event.html'
 
     def form_valid(self, form):
@@ -183,22 +182,22 @@ class EventCreateView(LoginRequiredMixin,
 
     def get_form_kwargs(self):
         kwargs = super(EventCreateView, self).get_form_kwargs()
-        kwargs.update({'project_user': self.request.user})
+        kwargs.update({'request': self.request})
         return kwargs
 
 
 class EventDetailView(LoginRequiredMixin,
                       PermissionRequiredMixin,
-                      UserPassesTestMixin,
+                      # UserPassesTestMixin,
                       DetailView):
     model = Event
     permission_required = 'projects.view_event'
     context_object_name = 'event'
     template_name = 'event_detail.html'
 
-    def test_func(self):
-        obj = self.get_object()
-        return obj.supervisor.organization == self.request.user.organization
+    # def test_func(self):
+    #     obj = self.get_object()
+    #     return obj.supervisor.organization == self.request.user.organization
 
 
 class EventUpdateView(LoginRequiredMixin,
@@ -208,12 +207,11 @@ class EventUpdateView(LoginRequiredMixin,
     model = Event
     permission_required = 'projects.change_event'
     form_class = EventForm
-    success_url = reverse_lazy('event_table')
     template_name = 'event.html'
 
     def get_form_kwargs(self):
         kwargs = super(EventUpdateView, self).get_form_kwargs()
-        kwargs.update({'project_user': self.request.user})
+        kwargs.update({'request': self.request})
         return kwargs
 
     def test_func(self):
@@ -254,3 +252,27 @@ class LocationCreateView(LoginRequiredMixin,
     form_class = LocationForm
     success_url = reverse_lazy('event_table')
     template_name = 'location_modal.html'
+
+
+class TextEventInfoView(SingleObjectMixin, View):
+    model = Event
+
+    def get(self, request, *args, **kwargs):
+        event = self.get_object()
+
+        start = event.start_at.strftime('%d-%m-%Y %H:%M')
+        end = event.end_at.strftime('–%H:%M') if event.start_at.strftime(
+            '%d-%m-%Y') == event.end_at.strftime('%d-%m-%Y') else event.end_at.strftime(' | %d-%m-%Y %H:%M')
+        type = f'{event.type}' if not event.online else f'{event.type} online'
+        location = f'{event.location}' if not event.room else f'{event.location}, {event.room}'
+
+        content = [
+            event.title,
+            type,
+            f'{start}{end}',
+            location,
+            event.description,
+            event.link,
+        ]
+        content_export = '\n\n'.join(content)
+        return HttpResponse(content_export, content_type='text/plain; charset=utf8')
