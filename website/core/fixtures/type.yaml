@@ -1,0 +1,120 @@
+- model: core.type
+  pk: null
+  fields:
+    title: clubbing
+- model: core.type
+  pk: null
+  fields:
+    title: debate
+- model: core.type
+  pk: null
+  fields:
+    title: festival
+- model: core.type
+  pk: null
+  fields:
+    title: urban game
+- model: core.type
+  pk: null
+  fields:
+    title: board games
+- model: core.type
+  pk: null
+  fields:
+    title: hackathon
+- model: core.type
+  pk: null
+  fields:
+    title: retail
+- model: core.type
+  pk: null
+  fields:
+    title: urban intervention
+- model: core.type
+  pk: null
+  fields:
+    title: concert
+- model: core.type
+  pk: null
+  fields:
+    title: conference
+- model: core.type
+  pk: null
+  fields:
+    title: contest
+- model: core.type
+  pk: null
+  fields:
+    title: guided tour
+- model: core.type
+  pk: null
+  fields:
+    title: performance
+- model: core.type
+  pk: null
+  fields:
+    title: outdoor event
+- model: core.type
+  pk: null
+  fields:
+    title: podcast
+- model: core.type
+  pk: null
+  fields:
+    title: dancing party
+- model: core.type
+  pk: null
+  fields:
+    title: online content
+- model: core.type
+  pk: null
+  fields:
+    title: publication
+- model: core.type
+  pk: null
+  fields:
+    title: screening
+- model: core.type
+  pk: null
+  fields:
+    title: walk
+- model: core.type
+  pk: null
+  fields:
+    title: stage performance
+- model: core.type
+  pk: null
+  fields:
+    title: meeting
+- model: core.type
+  pk: null
+  fields:
+    title: streaming
+- model: core.type
+  pk: null
+  fields:
+    title: tutorial
+- model: core.type
+  pk: null
+  fields:
+    title: workshop
+- model: core.type
+  pk: null
+  fields:
+    title: reception
+- model: core.type
+  pk: null
+  fields:
+    title: guided tour
+- model: core.type
+  pk: null
+  fields:
+    title: talk
+- model: core.type
+  pk: null
+  fields:
+    title: exhibition
+- model: core.type
+  pk: null
+  fields:
+    title: other
