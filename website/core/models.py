@@ -1,7 +1,8 @@
 import uuid
+from django.utils import timezone
+from django.utils.translation import ugettext as _
 from django.contrib.gis.db import models
 from multiselectfield import MultiSelectField
-from django.utils.translation import ugettext as _
 
 
 class PersistentItem(models.Model):
@@ -82,8 +83,18 @@ class Status(models.Model):
         abstract = True
 
 
-class Type(PersistentItem):
+class Type(models.Model):
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
+    created = models.DateTimeField(default=timezone.now, editable=False)
+    modified = models.DateTimeField(default=timezone.now)
     title = models.CharField(max_length=50)
+
+    class Meta:
+        ordering = ["title"]
 
     def __str__(self):
         return self.title
