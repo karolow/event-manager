@@ -11,9 +11,14 @@ def any_user(request):
 
 def authenticated_user(request):
     if request.user.is_authenticated:
-        kwargs = {
-            'organization_name': request.user.organization,
-        }
+        try:
+            kwargs = {
+                'organization_name': request.user.organization.short_name,
+            }
+        except AttributeError:
+            kwargs = {
+                'organization_name': 'Event Manager',
+            }
         return kwargs
     else:
         return {}

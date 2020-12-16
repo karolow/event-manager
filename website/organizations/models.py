@@ -4,7 +4,7 @@ from core.models import PersistentItem, Entry, ContactDetails
 
 class Organization(Entry, ContactDetails):
     email_domain = models.CharField(max_length=255, blank=True)
-    short_name = models.CharField(max_length=14, blank=True)
+    short_name = models.CharField(max_length=14)
 
 
 class Activity(PersistentItem):
