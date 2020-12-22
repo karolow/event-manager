@@ -8,7 +8,22 @@
 <div class="row">
   <div class="col l4 m6 s12 offset-l4 offset-m3">
     <h1>{% trans "Your API token" %}</h1>
-        <p>{{ token }}</p>
+    <p class="large-text">{% trans "Event Manager comes with a programming interface (API) that can automatically communicate with other applications." %}</p>
+    <p class="large-text">{% trans "You could use it, for example, to send up-to-date data to a spreadsheet, Facebook or media partners." %}</p>
+    <div class="input-field"></div>
+      <input type="text" value="{{ token }}" id="APITokenInput">
+      <button class="btn waves-effect waves-light btn-margin" onclick="copyToClipboard()" onmouseout="outFunc()">Copy token<i class="material-icons left">assignment</i></button>
+    </div>
   </div>
 </div>
+
+<script>
+function copyToClipboard() {
+  var copyText = document.getElementById("APITokenInput");
+  copyText.select();
+  copyText.setSelectionRange(0, 40)
+  document.execCommand("copy");
+}
+</script>
+
 {% endblock content %}
