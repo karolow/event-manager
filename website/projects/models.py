@@ -16,7 +16,7 @@ from core.models import (
 from organizations.models import Activity
 
 
-class Project(Entry, ContactDetails):
+class Project(CloneMixin, Entry, ContactDetails, Status):
     parent_project = models.ForeignKey(
         'self',
         on_delete=models.SET_NULL,
