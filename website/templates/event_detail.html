@@ -44,9 +44,11 @@
 
       <!-- Right block -->
       <div class="col-block col s12 m4">
-        <div class="row display display-header no-top-border">
-          {{ event.fields }}
-        </div>
+        {% if event.fields %}
+          <div class="row display display-header no-top-border">
+            {{ event.fields }}
+          </div>
+        {% endif %}
         {% if event.location %}
           <div class="row display">
             {{ event.audiences }}

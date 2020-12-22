@@ -29,10 +29,12 @@
 
       <!-- Right block -->
       <div class="col-block col s12 m4">
+        {% if project.website %}
           <div class="row display display-header">
             {{ project.website }}
           </div>
-
+        {% endif %}
+        
         {% if project.email %}
           <div class="row display">
             {{ project.email }}
