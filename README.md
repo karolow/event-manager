@@ -11,3 +11,11 @@ To streamline this process and collect data for further analysis, we created a w
 It allows users to manage their organisation's profiles and publish data about events. Different authorisation levels make it possible to facilitate both project coordinators and officials responsible for the entire process.
 
 In addition, we have launched a public API, thanks to which external partners, such as media or researchers, can easily access information on current events.
+
+### Screens
+
+![Event Manager – list of events](https://karolpiekar.ski/images/screens/event_manager/event_manager_screen_01.png)
+
+![Event Manager – project description](https://karolpiekar.ski/images/screens/event_manager/event_manager_screen_02.png)
+
+![Event Manager – project form](https://karolpiekar.ski/images/screens/event_manager/event_manager_screen_03.png)
